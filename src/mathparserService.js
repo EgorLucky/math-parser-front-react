@@ -1,50 +1,50 @@
-export function createMathparserService(configuration, environment){
-	let serviceHost = (environment == "production")? configuration.mathParserServiceUrlProd: configuration.mathParserServiceUrlLocal;
-	return {
-		getLast: async function(limit){
-			let response = await fetch(serviceHost + '/api/math/getLast?limit=' + limit);
+export const mathParserService = {
+	setConfiguration(configuration, environment){
+		this.serviceHost = (environment == "production")? 
+							configuration.mathParserServiceUrlProd: 
+							configuration.mathParserServiceUrlLocal;
+	},
 
-			return await getResponseContent(response);
+	getLast: async function(limit){
+		const response = await fetch(this.serviceHost + '/api/math/getLast?limit=' + limit);
 
-		},
-		computeExpression: async function(expression, parameters) {
-			let payloadObject = {
-				expression: expression,
-				parameters: parameters
-            };
-			
-			let response = await fetch(serviceHost + '/api/math/computeExpression',
-			{
-				method: "post",
-				headers: {
-					"content-type": "application/json"
-				},
-				body: JSON.stringify(payloadObject)
-			});
-			
-			return await getResponseContent(response);
-		},
+		return await getResponseContent(response);
+	},
+	computeExpression: async function(expression, parameters) {
+		const payloadObject = {
+			expression: expression,
+			parameters: parameters
+		};
 		
-		computeFunctionValues: async function(expression, parametersTable) {
-			
-			let payloadObject = {
-				expression: expression,
-				parametersTable: parametersTable
-            };
-			
-			let response = await fetch(serviceHost + '/api/math/computeFunctionValues',
-			{
-				method: "post",
-				headers: {
-					"content-type": "application/json"
-				},
-				body: JSON.stringify(payloadObject)
-			});
+		const response = await this.myFetch('/api/math/computeExpression', payloadObject);
 
-			return await getResponseContent(response);
-		}
-	};
-}
+		return response;
+	},
+	
+	computeFunctionValues: async function(expression, parametersTable) {
+		const payloadObject = {
+			expression: expression,
+			parametersTable: parametersTable
+		};
+		
+		const response = await this.myFetch('/api/math/computeFunctionValues', payloadObject);
+
+		return response;
+	},
+
+	myFetch: async function(url, body){
+		const response = await fetch(this.serviceHost + url,
+		{
+			method: "post",
+			headers: {
+				"content-type": "application/json"
+			},
+			body: JSON.stringify(body)
+		});
+
+		return await getResponseContent(response);
+	}
+};
 
 async function getResponseContent(response)
 {
@@ -56,7 +56,7 @@ async function getResponseContent(response)
 	else 
 		content = await response.text();
 
-	let result = {
+	const result = {
 		status : response.status,
 		content: content,
 		contentType: response.headers.get("content-type")
