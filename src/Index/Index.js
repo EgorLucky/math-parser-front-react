@@ -16,26 +16,26 @@ class Index extends Component {
 				lastComputedFunctions:[],
 				isComputing: false,
 				computeResult: "",
+				expression: ""
 			};
-			
-		this.expressionTextRef = React.createRef();
-		this.computeButtonRef = React.createRef();
-		this.resultTextRef = React.createRef();
 
 		this.handler = new IndexHandler(this);
 	}
 
-	render (){
+	render () {
 		return (
 		<div className="App">
 				<AppDescription/>
 				Введите выражение:
 				<br/>
-				<textarea ref={this.expressionTextRef} 
-						  style={{width:'100%', height:'20%'}}>
+				<textarea
+					style={{width:'100%', height:'20%'}}
+					onChange={(e) => this.setState({expression: e.currentTarget.value})}>
+						{this.state.expression}
 				</textarea>
 				<br/>
-				<button ref={this.computeButtonRef}
+				<button
+						disabled={this.state.isComputing}
 						onClick={() => this.handler.computeButtonClicked()}>
 					Посчитать
 				</button>
@@ -46,10 +46,18 @@ class Index extends Component {
 				<br/>
 				<div id="parameters">
 					{
-						this.state.parametersArray.map(i => new ParameterDiv(i))
+						this.state.parametersArray.map(i => {
+							return <ParameterDiv
+								_key={i.key}
+								name={i.name}
+								value={i.value}
+								deleteParameter={i.deleteParameter}
+								onTextChanged={i.onTextChanged}
+							/>
+						})
 					}
 				</div>
-				<p ref={this.resultTextRef}>
+				<p>
 					{
 						this.state.isComputing? 
 							(<Loader/>) : 
@@ -67,7 +75,13 @@ class Index extends Component {
 						""
 					}
 					{
-						this.state.lastComputedFunctions.map(f => ComputedFunctionItem(f))
+						this.state.lastComputedFunctions.map(f => 
+						{
+							return <ComputedFunctionItem 
+									functionNotation={f.functionNotation}
+									parametersAndValues={f.parametersAndValues}
+									/>
+						})
 					}
 				</div>
 		</div>

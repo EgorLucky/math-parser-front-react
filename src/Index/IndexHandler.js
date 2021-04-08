@@ -21,23 +21,31 @@ export class IndexHandler{
 		
 		const key = parameters.length == 0? 1
 				: parseInt(parameters[parameters.length - 1].key) + 1;
-				
-		const parameterRef = {
-			block: React.createRef(),
-			name: React.createRef(),
-			value: React.createRef()
-		};		
-		
+			
 		const parameterProps = {
-			ref: parameterRef,
 			deleteParameter: (key) => this.deleteParameter(key), 
-			key: key
+			key: key,
+			name: "",
+			value: "",
+			onTextChanged: (e, key, property) => this.parameterTextChanged(e, key, property)
 		};
 		
 		parameters.push(parameterProps);
 		
 		this.indexComponent.setState({parametersArray: parameters});
 		
+	}
+
+	parameterTextChanged(e, key, property) {
+		const stateParameter = this.indexComponent
+									.state
+									.parametersArray
+									.filter(p => p.key == key)[0];
+		stateParameter[property] = e.currentTarget.value;
+
+		this.indexComponent.setState({parametersArray: this.indexComponent
+														.state
+														.parametersArray});
 	}
 	
 	deleteParameter(key) {
@@ -49,16 +57,15 @@ export class IndexHandler{
 	componentDidMount() {
 		mathParserService.getLast(20)
 		  .then(res => this.indexComponent.setState({ lastComputedFunctions: res.content }));
-	  }
+	}
 	  
-	async computeButtonClicked(){
-		this.indexComponent.computeButtonRef.current.disabled = true;
+	async computeButtonClicked() {
 		
-		const expressionText = this.indexComponent.expressionTextRef.current.value;
+		const expressionText = this.indexComponent.state.expression;
 		
 		const parameters = this.indexComponent.state.parametersArray.map(p => ({
-			variableName: p.ref.name.current.value,
-			value: p.ref.value.current.value
+			variableName: p.name,
+			value: p.value
 		}));
 		
 		this.indexComponent.setState({isComputing: true});
@@ -75,7 +82,6 @@ export class IndexHandler{
 				result+= " Проверьте ваше подключение к сети.";
 			
             this.indexComponent.setState({computeResult: result});
-			this.indexComponent.computeButtonRef.current.disabled = false;
 			return;
 		}
 
@@ -99,6 +105,5 @@ export class IndexHandler{
 				console.log(response.content);
 			}
 		}
-		this.indexComponent.computeButtonRef.current.disabled = false;
 	}
 }

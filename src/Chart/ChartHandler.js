@@ -13,7 +13,6 @@ export class ChartHandler{
     }
 
     async draw(){
-		this.chartComponent.drawButtonRef.current.disabled = true;
 		const labels = this.getLabels();
 		
 		this.chartComponent.setState({isComputing: true});
@@ -28,9 +27,11 @@ export class ChartHandler{
 			errorMesssage = "Ошибка!";
 			if(err == "TypeError: Failed to fetch")
 				errorMesssage += "Проверьте ваше подключение к сети.";
-            this.chartComponent.drawButtonRef.current.disabled = false;
 			
-			this.chartComponent.setState({errorMessage: errorMesssage});
+			this.chartComponent.setState({
+				errorMessage: errorMesssage, 
+				isComputing: false
+			});
 			
 			return;
 		}
@@ -45,8 +46,11 @@ export class ChartHandler{
 				console.log(getPointsResponse.content);
 			}
 			
-			this.chartComponent.setState({errorMessage: errorMesssage});
-			this.chartComponent.drawButtonRef.current.disabled = false;
+			this.chartComponent.setState({
+				errorMessage: errorMesssage, 
+				isComputing: false
+			});
+			
 			return;
 		}
 		
@@ -114,23 +118,18 @@ export class ChartHandler{
 			isComputing: false, 
 			errorMessage: errorMesssage
 		});
-		
-		this.chartComponent.drawButtonRef.current.disabled = false;
 	}
 	
 	getLabels() {
-		let xMinTextBox = this.chartComponent.xMinTextBoxRef.current;
-		let xMaxTextBox = this.chartComponent.xMaxTextBoxRef.current;
-		let xStepTextBox = this.chartComponent.xStepTextBoxRef.current;
+		let xMin = this.chartComponent.state.xMin;
+		let xMax = this.chartComponent.state.xMax;
+		let xStep = this.chartComponent.state.xStep;
 
-		if (!(Number(xMinTextBox.value) != NaN &&
-			Number(xMaxTextBox.value) != NaN &&
-			Number(xStepTextBox.value) != NaN))
+		if (!(Number(xMin) != NaN &&
+			Number(xMax) != NaN &&
+			Number(xStep) != NaN))
 			return [0, 1, 2, 3, 4, 5];
 
-		let xMin = Number(xMinTextBox.value);
-		let xMax = Number(xMaxTextBox.value);
-		let xStep = Number(xStepTextBox.value);
 		let result = [];
 		for (xMin; xMin < xMax; xMin += xStep)
 			result.push(xMin);
@@ -140,7 +139,7 @@ export class ChartHandler{
 	}
 	
 	async getPoints(labels) {
-		let expression = this.chartComponent.expressionInputElementRef.current.value;
+		let expression = this.chartComponent.state.expression;
 		let parametersTable = labels.map(a => [
 		{
 			variableName: "x",

@@ -1,16 +1,16 @@
 function ParameterDiv(props) {
-		return (<div ref={props.ref.block} key={props.key.toString()} style={{display:'flex'}}>
+		return (<div key={props._key.toString()} style={{display:'flex'}}>
 				<div>
 					<span>Имя параметра:</span>
 					<br/>
 					<span>Значение:</span>
 				</div>
 				<div>
-					<input ref={props.ref.name} type="text" className="parameterNameInput"/>
+					<input defaultValue={props.name} onChange={(e) => props.onTextChanged(e, props._key, "name")} type="text" className="parameterNameInput"/>
 					<br/>
-					<input ref={props.ref.value} type="text" className="parameterValueInput"/>
+					<input defaultValue={props.value} onChange={(e) => props.onTextChanged(e, props._key, "value")} type="text" className="parameterValueInput"/>
 				</div>
-				<button onClick={() => props.deleteParameter(props.key.toString())} style={{height:'22px'}}>Удалить параметр</button>
+				<button onClick={() => props.deleteParameter(props._key.toString())} style={{height:'22px'}}>Удалить параметр</button>
 			</div>);
 	}
 

@@ -9,14 +9,12 @@ class ChartPage extends Component {
 		
 		this.state = {
 			isComputing: false,
-			errorMessage: ""
+			errorMessage: "",
+			expression: "x^2",
+			xMin: -15,
+			xMax: 15,
+			xStep: 1
 		};
-		
-		this.drawButtonRef = React.createRef();
-		this.xMinTextBoxRef = React.createRef();
-		this.xMaxTextBoxRef = React.createRef();
-		this.xStepTextBoxRef = React.createRef();
-		this.expressionInputElementRef = React.createRef();
 
 		this.handler = new ChartHandler(this);
 	}
@@ -28,10 +26,10 @@ class ChartPage extends Component {
 					<br/>
 					Введите выражение f(x):
 					<br/>
-					<textarea 
-						ref={this.expressionInputElementRef} 
+					<textarea
+						onChange={(e) => this.setState({expression: e.currentTarget.value})}
 						style={{width:"100%"}}>
-					x^2
+						{this.state.expression}
 					</textarea>
 					<br/>
 					<div style={{display:"flex"}}>
@@ -41,15 +39,14 @@ class ChartPage extends Component {
 							от: 
 							<input
 								id = "xMin"
-								ref={this.xMinTextBoxRef}
-								defaultValue="-15"/>
+								onChange={(e) => this.setState({xMin: e.currentTarget.value})}
+								defaultValue={this.state.xMin}/>
 							<br/>
 							до: 
 							<input 
 								id = "xMax"
-								type="text" 
-								ref={this.xMaxTextBoxRef}
-								defaultValue="15"/>
+								onChange={(e) => this.setState({xMax: e.currentTarget.value})}
+								defaultValue={this.state.xMax}/>
 							<br/>
 						</div>
 						<div>
@@ -57,12 +54,11 @@ class ChartPage extends Component {
 							<br/>
 							<input
 								id = "xStep"
-								type="text" 
-								ref={this.xStepTextBoxRef}
-								defaultValue="1"/>
+								onChange={(e) => this.setState({xStep: e.currentTarget.value})}
+								defaultValue={this.state.xStep}/>
 							<br/>
 							<button 
-								ref={this.drawButtonRef}
+								disabled={this.state.isComputing}
 								onClick={() => this.handler.draw()}>
 							Построить
 							</button>
