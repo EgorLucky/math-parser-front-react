@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import AppDescription from '../Components/AppDescription.js';
-import ParameterDiv from '../Components/Parameter.js';
-import ComputedFunctionItem from '../Components/ComputedFunctionItem.js';
-import Loader from '../Components/Loader.js';
+import AppDescription from '../Components/AppDescription/AppDescription.js';
+import ParameterDiv from '../Components/Parameter/Parameter.js';
+import ComputedFunctionItem from '../Components/ComputedFunctionItem/ComputedFunctionItem.js';
+import Loader from '../Components/Loader/Loader.js';
 
 import {IndexHandler} from "./IndexHandler";
 

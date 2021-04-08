@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from '../Components/Loader.js';
+import Loader from '../Components/Loader/Loader.js';
 
 import {ChartHandler} from "./ChartHandler";
 
