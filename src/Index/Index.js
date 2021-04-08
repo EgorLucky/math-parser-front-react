@@ -15,7 +15,6 @@ class Index extends Component {
 				parametersArray:[],
 				lastComputedFunctions:[],
 				isComputing: false,
-				isErrorComputed: false,
 				computeResult: "",
 			};
 			
