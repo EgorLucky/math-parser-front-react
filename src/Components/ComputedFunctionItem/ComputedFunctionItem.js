@@ -1,7 +1,7 @@
 function ComputedFunctionItem(props) {
 	 return (
 		<table 
-			className="computed-function-item"
+			className="computed-function-table"
 			border="1"
 			cellSpacing="0"
 		>

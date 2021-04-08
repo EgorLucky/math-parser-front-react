@@ -48,7 +48,7 @@ class Index extends Component {
 					{
 						this.state.parametersArray.map(i => {
 							return <ParameterDiv
-								_key={i.key}
+								id={i.key}
 								name={i.name}
 								value={i.value}
 								deleteParameter={i.deleteParameter}
