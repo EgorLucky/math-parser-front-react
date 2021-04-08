@@ -1,8 +1,10 @@
 function ComputedFunctionItem(props) {
 	 return (
-		<table border="1"
-				cellSpacing="0"
-				style={{fontSize:"xx-large", width:"100%", marginBottom:"10px"}}>
+		<table 
+			className="computed-function-item"
+			border="1"
+			cellSpacing="0"
+		>
 			<tr>
 				<td	colSpan="2">
 				{props.functionNotation}
