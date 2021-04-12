@@ -29,14 +29,15 @@ class Index extends Component {
 				Введите выражение:
 				<br/>
 				<textarea
-					style={{width:'100%', height:'20%'}}
+					className='index-expression-textarea'
 					onChange={(e) => this.setState({expression: e.currentTarget.value})}
 					defaultValue={this.state.expression}>
 				</textarea>
 				<br/>
 				<button
-						disabled={this.state.isComputing}
-						onClick={() => this.handler.computeButtonClicked()}>
+					disabled={this.state.isComputing}
+					onClick={() => this.handler.computeButtonClicked()}
+				>
 					Посчитать
 				</button>
 				<button id="addParameterButton" 

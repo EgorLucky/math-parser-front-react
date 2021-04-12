@@ -34,7 +34,7 @@ class ChartPage extends Component {
 					<br/>
 					<textarea
 						onChange={(e) => this.setState({expression: e.currentTarget.value})}
-						style={{width:"100%"}}
+						className='chart-expression-textarea'
 						defaultValue={this.state.expression}>
 					</textarea>
 					<br/>
