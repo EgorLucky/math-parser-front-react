@@ -48,6 +48,7 @@ class Index extends Component {
 					{
 						this.state.parametersArray.map(i => {
 							return <ParameterDiv
+								key={i.key}
 								id={i.key}
 								name={i.name}
 								value={i.value}
@@ -71,9 +72,10 @@ class Index extends Component {
 						this.state.lastComputedFunctions.length == 0 && (<Loader/>)
 					}
 					{
-						this.state.lastComputedFunctions.map(f => 
+						this.state.lastComputedFunctions.map((f, key) => 
 						{
 							return <ComputedFunctionItem 
+									key={key}
 									functionNotation={f.functionNotation}
 									parametersAndValues={f.parametersAndValues}
 									/>
