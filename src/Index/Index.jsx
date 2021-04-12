@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import AppDescription from '../Components/AppDescription/AppDescription.js';
-import ParameterDiv from '../Components/Parameter/Parameter.js';
-import ComputedFunctionItem from '../Components/ComputedFunctionItem/ComputedFunctionItem.js';
-import Loader from '../Components/Loader/Loader.js';
+import AppDescription from '../Components/AppDescription/AppDescription';
+import ParameterDiv from '../Components/Parameter/Parameter';
+import ComputedFunctionItem from '../Components/ComputedFunctionItem/ComputedFunctionItem';
+import Loader from '../Components/Loader/Loader';
 
 import {IndexHandler} from "./IndexHandler";
 
@@ -30,8 +30,8 @@ class Index extends Component {
 				<br/>
 				<textarea
 					style={{width:'100%', height:'20%'}}
-					onChange={(e) => this.setState({expression: e.currentTarget.value})}>
-						{this.state.expression}
+					onChange={(e) => this.setState({expression: e.currentTarget.value})}
+					defaultValue={this.state.expression}>
 				</textarea>
 				<br/>
 				<button
@@ -59,9 +59,7 @@ class Index extends Component {
 				</div>
 				<p>
 					{
-						this.state.isComputing? 
-							(<Loader/>) : 
-						 	(this.state.computeResult)
+						this.state.isComputing && (<Loader/>) || (this.state.computeResult)
 					}
 				</p>
 
@@ -70,9 +68,7 @@ class Index extends Component {
 				<h3>Последние вычисленные функции:</h3>
 				<div id="lastComputedFunctions">	
 					{
-						this.state.lastComputedFunctions.length == 0? 
-						(<Loader/>) : 
-						""
+						this.state.lastComputedFunctions.length == 0 && (<Loader/>)
 					}
 					{
 						this.state.lastComputedFunctions.map(f => 

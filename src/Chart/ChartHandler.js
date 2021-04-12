@@ -25,7 +25,7 @@ export class ChartHandler{
 		catch(err)
 		{
 			errorMesssage = "Ошибка!";
-			if(err == "TypeError: Failed to fetch")
+			if(err === "TypeError: Failed to fetch")
 				errorMesssage += "Проверьте ваше подключение к сети.";
 			
 			this.chartComponent.setState({
@@ -83,7 +83,7 @@ export class ChartHandler{
 				const data = chart.config.data;
 				for (let i = 0; i < data.datasets.length; i++) {
 					for (let j = 0; j < data.labels.length; j++) {
-						let fct = data.datasets[i].function,
+						const fct = data.datasets[i].function,
 							x = data.labels[j],
 							functionValues = fct(x);
 						functionValues.map(y => data.datasets[i].data.push(y));
@@ -121,31 +121,29 @@ export class ChartHandler{
 	}
 	
 	getLabels() {
-		let xMin = this.chartComponent.state.xMin;
-		let xMax = this.chartComponent.state.xMax;
-		let xStep = this.chartComponent.state.xStep;
+		const {xMin, xMax, xStep} = this.chartComponent.state;
 
-		if (!(Number(xMin) != NaN &&
-			Number(xMax) != NaN &&
-			Number(xStep) != NaN))
+		if (isNaN(xMin) ||
+			isNaN(xMax) ||
+			isNaN(xStep))
 			return [0, 1, 2, 3, 4, 5];
 
-		let result = [];
-		for (xMin; xMin < xMax; xMin += xStep)
-			result.push(xMin);
+		const result = [];
+		for (let i = xMin; i < xMax; i += xStep)
+			result.push(i);
 		result.push(xMax);
 
 		return result;
 	}
 	
 	async getPoints(labels) {
-		let expression = this.chartComponent.state.expression;
-		let parametersTable = labels.map(a => [
+		const expression = this.chartComponent.state.expression;
+		const parametersTable = labels.map(a => [
 		{
 			variableName: "x",
 			value: a
 		}]);
-		let response = await mathParserService.computeFunctionValues(expression, parametersTable);
+		const response = await mathParserService.computeFunctionValues(expression, parametersTable);
 
 		return response;
 	}

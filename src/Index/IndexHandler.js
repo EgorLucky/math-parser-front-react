@@ -49,8 +49,11 @@ export class IndexHandler{
 	}
 	
 	deleteParameter(key) {
-		let parameters = this.indexComponent.state.parametersArray;
-		parameters = parameters.filter(p => p.key != key);
+		const parameters = this
+						.indexComponent
+						.state
+						.parametersArray
+						.filter(p => p.key != key);
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	
@@ -78,7 +81,7 @@ export class IndexHandler{
 		{
 			this.indexComponent.setState({isComputing: false});
 			let result = "Ошибка!";
-			if(err == "TypeError: Failed to fetch")
+			if(err === "TypeError: Failed to fetch")
 				result+= " Проверьте ваше подключение к сети.";
 			
             this.indexComponent.setState({computeResult: result});
@@ -98,7 +101,7 @@ export class IndexHandler{
 		else
 		{
 			if(response.contentType.includes("json"))
-            this.indexComponent.setState({computeResult: "Ошибка! Ответ от сервера: " + response.content.message});
+            	this.indexComponent.setState({computeResult: "Ошибка! Ответ от сервера: " + response.content.message});
 			else 
 			{
 				this.indexComponent.setState({computeResult: "Ошибка!"});

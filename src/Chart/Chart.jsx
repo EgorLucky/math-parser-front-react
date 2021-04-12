@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from '../Components/Loader/Loader.js';
+import Loader from '../Components/Loader/Loader';
 
 import {ChartHandler} from "./ChartHandler";
 
@@ -18,6 +18,12 @@ class ChartPage extends Component {
 
 		this.handler = new ChartHandler(this);
 	}
+
+	onNumberFieldChanged(property, e) {
+		const state = {};
+		state[property] = Number(e.currentTarget.value);
+		this.setState(state);
+	}
 	
 	render(){
 		return <>
@@ -28,8 +34,8 @@ class ChartPage extends Component {
 					<br/>
 					<textarea
 						onChange={(e) => this.setState({expression: e.currentTarget.value})}
-						style={{width:"100%"}}>
-						{this.state.expression}
+						style={{width:"100%"}}
+						defaultValue={this.state.expression}>
 					</textarea>
 					<br/>
 					<div style={{display:"flex"}}>
@@ -39,13 +45,13 @@ class ChartPage extends Component {
 							от: 
 							<input
 								id = "xMin"
-								onChange={(e) => this.setState({xMin: e.currentTarget.value})}
+								onChange={(e) => this.onNumberFieldChanged("xMin", e)}
 								defaultValue={this.state.xMin}/>
 							<br/>
 							до: 
 							<input 
 								id = "xMax"
-								onChange={(e) => this.setState({xMax: e.currentTarget.value})}
+								onChange={(e) => this.onNumberFieldChanged("xMax", e)}
 								defaultValue={this.state.xMax}/>
 							<br/>
 						</div>
@@ -54,7 +60,7 @@ class ChartPage extends Component {
 							<br/>
 							<input
 								id = "xStep"
-								onChange={(e) => this.setState({xStep: e.currentTarget.value})}
+								onChange={(e) => this.onNumberFieldChanged("xStep", e)}
 								defaultValue={this.state.xStep}/>
 							<br/>
 							<button 
@@ -66,7 +72,7 @@ class ChartPage extends Component {
 					</div>
 					<br/>
 					{
-						this.state.isComputing? <Loader/> : ""
+						this.state.isComputing && <Loader/>
 					}
 					{
 						this.state.errorMessage

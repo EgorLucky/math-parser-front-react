@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from './Index/Index';
-import ChartPage from './Chart/Chart';
+import Index from './Index/Index.jsx';
+import ChartPage from './Chart/Chart.jsx';
 import reportWebVitals from './reportWebVitals';
 
 import {
