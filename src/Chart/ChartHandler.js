@@ -25,8 +25,10 @@ export class ChartHandler{
 		catch(err)
 		{
 			errorMesssage = "Ошибка!";
-			if(err === "TypeError: Failed to fetch")
-				errorMesssage += "Проверьте ваше подключение к сети.";
+			if(err instanceof TypeError && 
+				err.message == "Failed to fetch") {
+					errorMesssage+= " Проверьте ваше подключение к сети.";
+			}
 			
 			this.chartComponent.setState({
 				errorMessage: errorMesssage, 
@@ -83,9 +85,9 @@ export class ChartHandler{
 				const data = chart.config.data;
 				for (let i = 0; i < data.datasets.length; i++) {
 					for (let j = 0; j < data.labels.length; j++) {
-						const fct = data.datasets[i].function,
+						const func = data.datasets[i].function,
 							x = data.labels[j],
-							functionValues = fct(x);
+							functionValues = func(x);
 						functionValues.map(y => data.datasets[i].data.push(y));
 					}
 				}

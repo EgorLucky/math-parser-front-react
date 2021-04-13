@@ -14,13 +14,13 @@ export class IndexHandler{
     addParameter() {
 		const parameters = this.indexComponent.state.parametersArray;
 		
-		if(parameters.length == 5){
+		if(parameters.length == 5) {
 			alert("Не более 5 параметров!");
 			return;
 		}
 		
 		const key = parameters.length == 0? 1
-				: parseInt(parameters[parameters.length - 1].key) + 1;
+				: parameters[parameters.length - 1].key + 1;
 			
 		const parameterProps = {
 			deleteParameter: (key) => this.deleteParameter(key), 
@@ -57,9 +57,21 @@ export class IndexHandler{
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	
-	componentDidMount() {
-		mathParserService.getLast(20)
-		  .then(res => this.indexComponent.setState({ lastComputedFunctions: res.content }));
+	async componentDidMount() {
+		const response = await mathParserService.getLast(20);
+
+		let id = 0;
+		const lastComputedFunctions = response.content.map(c => {
+			c["id"] = id++;
+			
+			let paramAndValueId = 0;
+			c.parametersAndValues.map(pv => pv["id"] = paramAndValueId++);
+			return c;
+		});
+
+		this.indexComponent.setState({ 
+			lastComputedFunctions: lastComputedFunctions
+		});
 	}
 	  
 	async computeButtonClicked() {
@@ -81,8 +93,11 @@ export class IndexHandler{
 		{
 			this.indexComponent.setState({isComputing: false});
 			let result = "Ошибка!";
-			if(err === "TypeError: Failed to fetch")
+			console.log(err.message);
+			if(err instanceof TypeError && 
+				err.message == "Failed to fetch") {
 				result+= " Проверьте ваше подключение к сети.";
+			}
 			
             this.indexComponent.setState({computeResult: result});
 			return;
@@ -92,21 +107,26 @@ export class IndexHandler{
 		{			
 			this.indexComponent.setState({
 				isComputing: false,
-				computeResult: response.content.result,
-				isErrorComputed: false
+				computeResult: response.content.result
 			});
-			
-			this.indexComponent.componentDidMount();
 		}
 		else
 		{
 			if(response.contentType.includes("json"))
-            	this.indexComponent.setState({computeResult: "Ошибка! Ответ от сервера: " + response.content.message});
+            	this.indexComponent.setState({
+					computeResult: "Ошибка! Ответ от сервера: " + response.content.message,
+					isComputing: false
+				});
 			else 
 			{
-				this.indexComponent.setState({computeResult: "Ошибка!"});
+				this.indexComponent.setState({
+					computeResult: "Ошибка!",
+					isComputing: false
+				});
 				console.log(response.content);
 			}
 		}
+
+		this.componentDidMount();
 	}
 }

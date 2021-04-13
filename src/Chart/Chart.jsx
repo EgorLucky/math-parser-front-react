@@ -3,6 +3,10 @@ import Loader from '../Components/Loader/Loader';
 
 import {ChartHandler} from "./ChartHandler";
 
+const xMin = "xMin";
+const xMax = "xMax";
+const xStep = "xStep";
+
 class ChartPage extends Component {
 	constructor(props){
 		super(props);
@@ -17,12 +21,17 @@ class ChartPage extends Component {
 		};
 
 		this.handler = new ChartHandler(this);
+
+		this.canvasStyle = {
+			width:"400px", 
+			height:"400px"
+		};
 	}
 
 	onNumberFieldChanged(property, e) {
-		const state = {};
-		state[property] = Number(e.currentTarget.value);
-		this.setState(state);
+		const newState = {};
+		newState[property] = Number(e.currentTarget.value);
+		this.setState(newState);
 	}
 	
 	render(){
@@ -38,20 +47,18 @@ class ChartPage extends Component {
 						defaultValue={this.state.expression}>
 					</textarea>
 					<br/>
-					<div style={{display:"flex"}}>
+					<div className="chart-2d-parameter-div">
 						<div>
 							Область определений
 							<br/> 
 							от: 
 							<input
-								id = "xMin"
-								onChange={(e) => this.onNumberFieldChanged("xMin", e)}
+								onChange={(e) => this.onNumberFieldChanged(xMin, e)}
 								defaultValue={this.state.xMin}/>
 							<br/>
 							до: 
 							<input 
-								id = "xMax"
-								onChange={(e) => this.onNumberFieldChanged("xMax", e)}
+								onChange={(e) => this.onNumberFieldChanged(xMax, e)}
 								defaultValue={this.state.xMax}/>
 							<br/>
 						</div>
@@ -59,8 +66,7 @@ class ChartPage extends Component {
 							с шагом:
 							<br/>
 							<input
-								id = "xStep"
-								onChange={(e) => this.onNumberFieldChanged("xStep", e)}
+								onChange={(e) => this.onNumberFieldChanged(xStep, e)}
 								defaultValue={this.state.xStep}/>
 							<br/>
 							<button 
@@ -79,7 +85,7 @@ class ChartPage extends Component {
 					}
 					<canvas 
 						id="myChart" 
-						style={{width:"400px", height:"400px"}}>
+						style={this.canvasStyle}>
 					</canvas>
 				</>;
 	}

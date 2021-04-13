@@ -73,10 +73,10 @@ class Index extends Component {
 						this.state.lastComputedFunctions.length == 0 && (<Loader/>)
 					}
 					{
-						this.state.lastComputedFunctions.map((f, key) => 
+						this.state.lastComputedFunctions.map(f => 
 						{
 							return <ComputedFunctionItem 
-									key={key}
+									key={f.id}
 									functionNotation={f.functionNotation}
 									parametersAndValues={f.parametersAndValues}
 									/>

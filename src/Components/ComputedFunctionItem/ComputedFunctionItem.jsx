@@ -20,10 +20,10 @@ function ComputedFunctionItem(props) {
 					</td>
 				</tr>
 				{
-					props.parametersAndValues.map((pv, key) => 
+					props.parametersAndValues.map(pv => 
 					{
 						return (
-							<tr key={key}>
+							<tr key={pv.id}>
 								<td> {pv.parameters} </td>
 								<td> {pv.value} </td>
 							</tr>)
