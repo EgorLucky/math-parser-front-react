@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import Loader from '../Components/Loader/Loader';
+import Loader from '../Components/Loader';
 
-import {ChartHandler} from "./ChartHandler";
-
-const xMin = "xMin";
-const xMax = "xMax";
-const xStep = "xStep";
+import {ChartHandler} from "./handler";
+import {xMin, xMax, xStep} from "./constants";
 
 class ChartPage extends Component {
 	constructor(props){
@@ -33,6 +30,16 @@ class ChartPage extends Component {
 		newState[property] = Number(e.currentTarget.value);
 		this.setState(newState);
 	}
+
+	onExpressionChange = e => this.setState({expression: e.currentTarget.value});
+
+	onXMinChange = e => this.onNumberFieldChanged(xMin, e);
+
+	onXMaxChange = e => this.onNumberFieldChanged(xMax, e);
+
+	onXStepChange = e => this.onNumberFieldChanged(xStep, e);
+
+	draw = () => this.handler.draw();
 	
 	render(){
 		return <>
@@ -42,7 +49,7 @@ class ChartPage extends Component {
 					Введите выражение f(x):
 					<br/>
 					<textarea
-						onChange={(e) => this.setState({expression: e.currentTarget.value})}
+						onChange={this.onExpressionChange}
 						className='chart-expression-textarea'
 						defaultValue={this.state.expression}>
 					</textarea>
@@ -53,12 +60,12 @@ class ChartPage extends Component {
 							<br/> 
 							от: 
 							<input
-								onChange={(e) => this.onNumberFieldChanged(xMin, e)}
+								onChange={this.onXMinChange}
 								defaultValue={this.state.xMin}/>
 							<br/>
 							до: 
 							<input 
-								onChange={(e) => this.onNumberFieldChanged(xMax, e)}
+								onChange={this.onXMaxChange}
 								defaultValue={this.state.xMax}/>
 							<br/>
 						</div>
@@ -66,12 +73,12 @@ class ChartPage extends Component {
 							с шагом:
 							<br/>
 							<input
-								onChange={(e) => this.onNumberFieldChanged(xStep, e)}
+								onChange={this.onXStepChange}
 								defaultValue={this.state.xStep}/>
 							<br/>
 							<button 
 								disabled={this.state.isComputing}
-								onClick={() => this.handler.draw()}>
+								onClick={this.draw}>
 							Построить
 							</button>
 						</div>

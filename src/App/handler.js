@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {appConfiguration} from "../configuration.js";
 import {mathParserService} from "../mathparserService.js";
 
@@ -93,7 +91,6 @@ export class IndexHandler{
 		{
 			this.indexComponent.setState({isComputing: false});
 			let result = "Ошибка!";
-			console.log(err.message);
 			if(err instanceof TypeError && 
 				err.message == "Failed to fetch") {
 				result+= " Проверьте ваше подключение к сети.";
@@ -107,14 +104,14 @@ export class IndexHandler{
 		{			
 			this.indexComponent.setState({
 				isComputing: false,
-				computeResult: response.content.result
+				computeResult: response?.content?.result
 			});
 		}
 		else
 		{
 			if(response.contentType.includes("json"))
             	this.indexComponent.setState({
-					computeResult: "Ошибка! Ответ от сервера: " + response.content.message,
+					computeResult: "Ошибка! Ответ от сервера: " + response?.content?.message,
 					isComputing: false
 				});
 			else 

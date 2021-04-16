@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import AppDescription from '../Components/AppDescription/AppDescription';
-import ParameterDiv from '../Components/Parameter/Parameter';
-import ComputedFunctionItem from '../Components/ComputedFunctionItem/ComputedFunctionItem';
-import Loader from '../Components/Loader/Loader';
+import AppDescription from '../Components/AppDescription';
+import ParameterDiv from '../Components/Parameter';
+import ComputedFunctionItem from '../Components/ComputedFunctionItem';
+import Loader from '../Components/Loader';
 
-import {IndexHandler} from "./IndexHandler";
+import {IndexHandler} from "./handler";
 
 
-class Index extends Component {
+class App extends Component {
 	constructor (props){
 		 super(props); 
 		 this.state = {
@@ -22,6 +22,15 @@ class Index extends Component {
 		this.handler = new IndexHandler(this);
 	}
 
+	onExpressionChange = e => this.setState({expression: e.currentTarget.value});
+
+	computeButtonClicked = () => this.handler.computeButtonClicked();
+
+	addParameter = () => this.handler.addParameter();
+
+	componentDidMount = () => this.handler.componentDidMount();
+
+
 	render () {
 		return (
 		<div className="App">
@@ -30,18 +39,18 @@ class Index extends Component {
 				<br/>
 				<textarea
 					className='index-expression-textarea'
-					onChange={(e) => this.setState({expression: e.currentTarget.value})}
+					onChange={this.onExpressionChange}
 					defaultValue={this.state.expression}>
 				</textarea>
 				<br/>
 				<button
 					disabled={this.state.isComputing}
-					onClick={() => this.handler.computeButtonClicked()}
+					onClick={this.computeButtonClicked}
 				>
 					Посчитать
 				</button>
 				<button id="addParameterButton" 
-						onClick={() => this.handler.addParameter()}>
+						onClick={this.addParameter}>
 					Добавить параметр
 				</button>
 				<br/>
@@ -59,11 +68,11 @@ class Index extends Component {
 						})
 					}
 				</div>
-				<p>
+				<div>
 					{
 						this.state.isComputing && (<Loader/>) || (this.state.computeResult)
 					}
-				</p>
+				</div>
 
 				<a href="chart">Здесь можно построить график</a>
 
@@ -86,11 +95,7 @@ class Index extends Component {
 		</div>
 		);
 	}
-	
-	componentDidMount() {
-		this.handler.componentDidMount();
-	}
 	  
 }
 
-export default Index;
+export default App;
