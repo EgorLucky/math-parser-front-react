@@ -1,6 +1,8 @@
 import {appConfiguration} from "../configuration.js";
 import {mathParserService} from "../mathparserService.js";
 
+import {maxParametersCount} from "./constants";
+
 const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
 mathParserService.setConfiguration(appConfiguration, environment);
 
@@ -12,12 +14,12 @@ export class IndexHandler{
     addParameter() {
 		const parameters = this.indexComponent.state.parametersArray;
 		
-		if(parameters.length == 5) {
+		if(parameters.length === maxParametersCount) {
 			alert("Не более 5 параметров!");
 			return;
 		}
 		
-		const key = parameters.length == 0? 1
+		const key = parameters.length === 0? 1
 				: parameters[parameters.length - 1].key + 1;
 			
 		const parameterProps = {
@@ -38,7 +40,7 @@ export class IndexHandler{
 		const stateParameter = this.indexComponent
 									.state
 									.parametersArray
-									.filter(p => p.key == key)[0];
+									.filter(p => p.key === key)[0];
 		stateParameter[property] = e.currentTarget.value;
 
 		this.indexComponent.setState({parametersArray: this.indexComponent
@@ -51,7 +53,7 @@ export class IndexHandler{
 						.indexComponent
 						.state
 						.parametersArray
-						.filter(p => p.key != key);
+						.filter(p => p.key !== key);
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	
@@ -92,7 +94,7 @@ export class IndexHandler{
 			this.indexComponent.setState({isComputing: false});
 			let result = "Ошибка!";
 			if(err instanceof TypeError && 
-				err.message == "Failed to fetch") {
+				err.message === "Failed to fetch") {
 				result+= " Проверьте ваше подключение к сети.";
 			}
 			
@@ -100,7 +102,7 @@ export class IndexHandler{
 			return;
 		}
 
-		if(response.status == 200)
+		if(response.status === 200)
 		{			
 			this.indexComponent.setState({
 				isComputing: false,
@@ -109,11 +111,14 @@ export class IndexHandler{
 		}
 		else
 		{
-			if(response.contentType.includes("json"))
+			if(response.contentType.includes("json") 
+				&& response?.content?.message !== undefined) 
+			{
             	this.indexComponent.setState({
-					computeResult: "Ошибка! Ответ от сервера: " + response?.content?.message,
+					computeResult: "Ошибка! Ответ от сервера: " + response.content.message,
 					isComputing: false
 				});
+			}
 			else 
 			{
 				this.indexComponent.setState({

@@ -68,18 +68,16 @@ class App extends Component {
 						})
 					}
 				</div>
-				<div>
-					{
-						this.state.isComputing && (<Loader/>) || (this.state.computeResult)
-					}
-				</div>
+				{
+					this.state.isComputing && <Loader/> || <p>{this.state.computeResult}</p>
+				}
 
 				<a href="chart">Здесь можно построить график</a>
 
 				<h3>Последние вычисленные функции:</h3>
 				<div id="lastComputedFunctions">	
 					{
-						this.state.lastComputedFunctions.length == 0 && (<Loader/>)
+						this.state.lastComputedFunctions.length === 0 && (<Loader/>)
 					}
 					{
 						this.state.lastComputedFunctions.map(f => 

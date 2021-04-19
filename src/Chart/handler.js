@@ -26,7 +26,7 @@ export class ChartHandler{
 		{
 			errorMesssage = "Ошибка!";
 			if(err instanceof TypeError && 
-				err.message == "Failed to fetch") {
+				err.message === "Failed to fetch") {
 					errorMesssage+= " Проверьте ваше подключение к сети.";
 			}
 			
@@ -38,9 +38,10 @@ export class ChartHandler{
 			return;
 		}
 
-		if(getPointsResponse.status != 200)
+		if(getPointsResponse.status !== 200)
 		{
-			if(getPointsResponse.contentType.includes("json"))
+			if(getPointsResponse.contentType.includes("json") 
+				&& getPointsResponse?.content?.message !== undefined)
 				errorMesssage = "Ошибка! Ответ от сервера: " + getPointsResponse.content.message;
 			else 
 			{
@@ -72,7 +73,7 @@ export class ChartHandler{
 			datasets: [
 			{
 					label: "mathFunction",
-					function: x => points.filter(p => p.x == x)
+					function: x => points.filter(p => p.x === x)
 										.map(p => p.y),
 				borderColor: "rgba(255, 206, 86, 1)",
 				data: [],

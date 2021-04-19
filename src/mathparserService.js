@@ -1,6 +1,6 @@
 export const mathParserService = {
 	setConfiguration(configuration, environment){
-		this.serviceHost = (environment == "production")? 
+		this.serviceHost = (environment === "production")? 
 							configuration.mathParserServiceUrlProd: 
 							configuration.mathParserServiceUrlLocal;
 	},
@@ -50,7 +50,7 @@ async function getResponseContent(response)
 {
 	let content = null;
 			
-	if(response.status == 200 || 
+	if(response.status === 200 || 
 		response.headers.get("content-type").includes("application/json"))
 		content = await response.json();
 	else 

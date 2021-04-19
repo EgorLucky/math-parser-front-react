@@ -7,8 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 ReactDOM.render(
@@ -16,7 +15,6 @@ ReactDOM.render(
   <Router>
 		<Switch>
 			<Route exact path="/" component={App} />
-			<Route exact path="/index" component={App} />
 			<Route path="/chart" component={ChartPage} />
 			
 		</Switch>

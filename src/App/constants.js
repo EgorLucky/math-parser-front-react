@@ -1,0 +1,1 @@
+export const maxParametersCount = 5;
