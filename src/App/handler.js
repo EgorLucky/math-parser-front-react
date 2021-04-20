@@ -14,12 +14,13 @@ export class IndexHandler{
     addParameter() {
 		const parameters = this.indexComponent.state.parametersArray;
 		
-		if(parameters.length === maxParametersCount) {
+		if(parameters.length === MAX_PARAMETERS_COUNT) {
 			alert("Не более 5 параметров!");
 			return;
 		}
 		
-		const key = parameters.length === 0? 1
+		const key = parameters.length === 0
+				? 1
 				: parameters[parameters.length - 1].key + 1;
 			
 		const parameterProps = {
