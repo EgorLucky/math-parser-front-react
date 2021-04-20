@@ -1,1 +1,1 @@
-export const maxParametersCount = 5;
+export const MAX_PARAMETERS_COUNT = 5;

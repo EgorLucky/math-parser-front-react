@@ -1,7 +1,7 @@
 import {appConfiguration} from "../configuration.js";
 import {mathParserService} from "../mathparserService.js";
 
-import {maxParametersCount} from "./constants";
+import {MAX_PARAMETERS_COUNT} from "./constants";
 
 const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
 mathParserService.setConfiguration(appConfiguration, environment);
