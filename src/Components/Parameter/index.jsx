@@ -1,12 +1,20 @@
 import {parameterNameFieldName, parameterValueFieldName} from "./constants";
 
 function ParameterDiv(props) {
-	const nameTextChanged = e => props.onTextChanged(e, props.id, parameterNameFieldName);
-	const valueTextChanged = e => props.onTextChanged(e, props.id, parameterValueFieldName);
-	const deleteParameter = () => props.deleteParameter(props.id);
+
+	const { 
+		id,
+		onTextChanged,
+		deleteParameter,
+		name,
+		value,
+		nameTextChanged = e => onTextChanged(e, id, parameterNameFieldName), 
+		valueTextChanged = e => onTextChanged(e, id, parameterValueFieldName), 
+		onDeleteParameter = () => deleteParameter(id)
+	} = props;
 
 	return (
-		<div key={props.id} className='parameter-parent-div'>
+		<div key={id} className='parameter-parent-div'>
 			<div>
 				<span>Имя параметра:</span>
 				<br/>
@@ -14,17 +22,17 @@ function ParameterDiv(props) {
 			</div>
 			<div>
 				<input 
-					defaultValue={props.name} 
+					defaultValue={name} 
 					onChange={nameTextChanged}
 				/>
 				<br/>
 				<input 
-					defaultValue={props.value} 
+					defaultValue={value} 
 					onChange={valueTextChanged}
 				/>
 			</div>
 			<button 
-				onClick={deleteParameter} 
+				onClick={onDeleteParameter} 
 				className='parameter-delete-button'
 			>
 				Удалить параметр
