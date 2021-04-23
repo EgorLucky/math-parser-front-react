@@ -11,14 +11,13 @@ import {
 } from "react-router-dom";
 
 ReactDOM.render(
-  
   <Router>
-		<Switch>
-			<Route exact path="/" component={App} />
-			<Route path="/chart" component={ChartPage} />
-			
-		</Switch>
-	</Router>,
+    <Switch>
+        <Route path="/" exact component={App} />
+        <Route path={ process.env.PUBLIC_URL + "/" } exact component={App} />
+        <Route path={ process.env.PUBLIC_URL + "/chart" } component={ChartPage} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 

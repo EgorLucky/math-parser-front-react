@@ -44,7 +44,7 @@ class ChartPage extends Component {
 	render(){
 		return <>
 					<h3>Построение графика</h3>
-					<a href="/">На главную</a>
+					<a href={process.env.PUBLIC_URL + "/"}>На главную</a>
 					<br/>
 					Введите выражение f(x):
 					<br/>

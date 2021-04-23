@@ -72,7 +72,7 @@ class App extends Component {
 					this.state.isComputing && <Loader/> || <p>{this.state.computeResult}</p>
 				}
 
-				<a href="chart">Здесь можно построить график</a>
+				<a href={process.env.PUBLIC_URL + "/chart"}>Здесь можно построить график</a>
 
 				<h3>Последние вычисленные функции:</h3>
 				<div id="lastComputedFunctions">	
