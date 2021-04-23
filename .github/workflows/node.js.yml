@@ -30,5 +30,3 @@ jobs:
       env:
         CI: false
     - run: npm test
-    - run: npm install -g serve
-    - run: serve -s build
