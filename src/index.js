@@ -1,22 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from './Index/Index';
-import ChartPage from './Chart/Chart';
+import App from './App';
+import ChartPage from './Chart';
 import reportWebVitals from './reportWebVitals';
 
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 ReactDOM.render(
   
   <Router>
 		<Switch>
-			<Route exact path="/" component={Index} />
-			<Route exact path="/index" component={Index} />
+			<Route exact path="/" component={App} />
 			<Route path="/chart" component={ChartPage} />
 			
 		</Switch>

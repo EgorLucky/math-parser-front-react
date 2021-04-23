@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Loader from '../Components/Loader/Loader.js';
+import Loader from '../Components/Loader';
 
-import {ChartHandler} from "./ChartHandler";
+import {ChartHandler} from "./handler";
+import {xMin, xMax, xStep} from "./constants";
 
 class ChartPage extends Component {
 	constructor(props){
@@ -17,7 +18,28 @@ class ChartPage extends Component {
 		};
 
 		this.handler = new ChartHandler(this);
+
+		this.canvasStyle = {
+			width:"400px", 
+			height:"400px"
+		};
 	}
+
+	onNumberFieldChanged(property, e) {
+		const newState = {};
+		newState[property] = Number(e.currentTarget.value);
+		this.setState(newState);
+	}
+
+	onExpressionChange = e => this.setState({expression: e.currentTarget.value});
+
+	onXMinChange = e => this.onNumberFieldChanged(xMin, e);
+
+	onXMaxChange = e => this.onNumberFieldChanged(xMax, e);
+
+	onXStepChange = e => this.onNumberFieldChanged(xStep, e);
+
+	draw = () => this.handler.draw();
 	
 	render(){
 		return <>
@@ -27,25 +49,23 @@ class ChartPage extends Component {
 					Введите выражение f(x):
 					<br/>
 					<textarea
-						onChange={(e) => this.setState({expression: e.currentTarget.value})}
-						style={{width:"100%"}}>
-						{this.state.expression}
+						onChange={this.onExpressionChange}
+						className='chart-expression-textarea'
+						defaultValue={this.state.expression}>
 					</textarea>
 					<br/>
-					<div style={{display:"flex"}}>
+					<div className="chart-2d-parameter-div">
 						<div>
 							Область определений
 							<br/> 
 							от: 
 							<input
-								id = "xMin"
-								onChange={(e) => this.setState({xMin: e.currentTarget.value})}
+								onChange={this.onXMinChange}
 								defaultValue={this.state.xMin}/>
 							<br/>
 							до: 
 							<input 
-								id = "xMax"
-								onChange={(e) => this.setState({xMax: e.currentTarget.value})}
+								onChange={this.onXMaxChange}
 								defaultValue={this.state.xMax}/>
 							<br/>
 						</div>
@@ -53,27 +73,26 @@ class ChartPage extends Component {
 							с шагом:
 							<br/>
 							<input
-								id = "xStep"
-								onChange={(e) => this.setState({xStep: e.currentTarget.value})}
+								onChange={this.onXStepChange}
 								defaultValue={this.state.xStep}/>
 							<br/>
 							<button 
 								disabled={this.state.isComputing}
-								onClick={() => this.handler.draw()}>
+								onClick={this.draw}>
 							Построить
 							</button>
 						</div>
 					</div>
 					<br/>
 					{
-						this.state.isComputing? <Loader/> : ""
+						this.state.isComputing && <Loader/>
 					}
 					{
 						this.state.errorMessage
 					}
 					<canvas 
 						id="myChart" 
-						style={{width:"400px", height:"400px"}}>
+						style={this.canvasStyle}>
 					</canvas>
 				</>;
 	}
