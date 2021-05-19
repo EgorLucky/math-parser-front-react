@@ -40,9 +40,10 @@ export class ChartHandler{
 
 		if(computeResponse.status !== 200)
 		{
+			const message = computeResponse?.content?.message;
 			if(computeResponse.contentType.includes("json") 
-				&& computeResponse?.content?.message !== undefined)
-				errorMesssage = "Ошибка! Ответ от сервера: " + computeResponse.content.message;
+				&& message !== undefined)
+				errorMesssage = "Ошибка! Ответ от сервера: " + message;
 			else 
 			{
 				errorMesssage = "Ошибка!";
@@ -64,11 +65,11 @@ export class ChartHandler{
 		if(destroyPreviousChart != null)
 			destroyPreviousChart();
 
-		const graphLables = points.map(p => p.x);
+		const lables = points.map(p => p.x);
 
 		const data = {
 			//args
-			labels: graphLables,
+			labels: lables,
 			datasets: [
 			{
 					label: "mathFunction",

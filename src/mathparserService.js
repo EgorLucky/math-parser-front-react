@@ -21,12 +21,12 @@ export const mathParserService = {
 		return response;
 	},
 	
-	compute2DIntervalPlot: async function(payload) {
+	compute2DIntervalPlot: async function({expression, xMax, xMin, xStep}) {
 		const payloadObject = {
-			expression: payload.expression,
-			max: payload.xMax,
-			min: payload.xMin,
-			step: payload.xStep
+			expression,
+			max: xMax,
+			min: xMin,
+			step: xStep
 		};
 		
 		const response = await this.myFetch('/api/math/compute2DIntervalPlot', payloadObject);
