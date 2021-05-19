@@ -13,14 +13,14 @@ export class ChartHandler{
     }
 
     async draw(){
-		const labels = this.getLabels();
+		const params = this.getParams();
 		
 		this.chartComponent.setState({isComputing: true});
 		
-		let getPointsResponse = null;
+		let computeResponse = null;
 		let errorMesssage = "";
 		try{
-			getPointsResponse = await this.getPoints(labels);
+			computeResponse = await mathParserService.compute2DIntervalPlot(params);
 		}
 		catch(err)
 		{
@@ -38,15 +38,15 @@ export class ChartHandler{
 			return;
 		}
 
-		if(getPointsResponse.status !== 200)
+		if(computeResponse.status !== 200)
 		{
-			if(getPointsResponse.contentType.includes("json") 
-				&& getPointsResponse?.content?.message !== undefined)
-				errorMesssage = "Ошибка! Ответ от сервера: " + getPointsResponse.content.message;
+			if(computeResponse.contentType.includes("json") 
+				&& computeResponse?.content?.message !== undefined)
+				errorMesssage = "Ошибка! Ответ от сервера: " + computeResponse.content.message;
 			else 
 			{
 				errorMesssage = "Ошибка!";
-				console.log(getPointsResponse.content);
+				console.log(computeResponse.content);
 			}
 			
 			this.chartComponent.setState({
@@ -59,17 +59,16 @@ export class ChartHandler{
 		
 		this.chartComponent.setState({errorMessage: ""});
 
-		const points = getPointsResponse.content.result.map(c => ({
-			x: c.parameters[0].value,
-			y: c.value
-		}));
+		const points = computeResponse.content.result;
 
 		if(destroyPreviousChart != null)
 			destroyPreviousChart();
 
+		const graphLables = points.map(p => p.x);
+
 		const data = {
 			//args
-			labels: labels,
+			labels: graphLables,
 			datasets: [
 			{
 					label: "mathFunction",
@@ -123,31 +122,19 @@ export class ChartHandler{
 		});
 	}
 	
-	getLabels() {
-		const {xMin, xMax, xStep} = this.chartComponent.state;
+	getParams() {
+		const {xMin, xMax, xStep, expression} = this.chartComponent.state;
 
 		if (isNaN(xMin) ||
 			isNaN(xMax) ||
 			isNaN(xStep))
-			return [0, 1, 2, 3, 4, 5];
+			return {
+				xMin: 0,
+				xMax: 5,
+				xStep: 1,
+				expression: expression
+			};
 
-		const result = [];
-		for (let i = xMin; i < xMax; i += xStep)
-			result.push(i);
-		result.push(xMax);
-
-		return result;
-	}
-	
-	async getPoints(labels) {
-		const expression = this.chartComponent.state.expression;
-		const parametersTable = labels.map(a => [
-		{
-			variableName: "x",
-			value: a
-		}]);
-		const response = await mathParserService.computeFunctionValues(expression, parametersTable);
-
-		return response;
+		return {xMin, xMax, xStep, expression};
 	}
 }
