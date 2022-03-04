@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 
 ReactDOM.render(
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <Switch>
         <Route path="/" exact component={App} />
         <Route path="/chart" component={ChartPage} />
