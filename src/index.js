@@ -5,7 +5,7 @@ import ChartPage from './Chart';
 import reportWebVitals from './reportWebVitals';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from "react-router-dom";

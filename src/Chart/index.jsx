@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import Loader from '../Components/Loader';
 
-import {ChartHandler} from "./handler";
-import {xMin, xMax, xStep} from "./constants";
+import { ChartHandler } from "./handler";
+import { xMin, xMax, xStep } from "./constants";
 
 class ChartPage extends Component {
 	constructor(props){
@@ -44,7 +46,7 @@ class ChartPage extends Component {
 	render(){
 		return <>
 					<h3>Построение графика</h3>
-					<a href={process.env.PUBLIC_URL + "/"}>На главную</a>
+					<NavLink to="/">На главную</NavLink>
 					<br/>
 					Введите выражение f(x):
 					<br/>

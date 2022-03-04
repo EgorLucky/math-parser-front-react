@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import AppDescription from '../Components/AppDescription';
 import ParameterDiv from '../Components/Parameter';
 import ComputedFunctionItem from '../Components/ComputedFunctionItem';
 import Loader from '../Components/Loader';
 
-import {IndexHandler} from "./handler";
+import { IndexHandler } from "./handler";
+
 
 
 class App extends Component {
@@ -72,7 +74,7 @@ class App extends Component {
 					this.state.isComputing && <Loader/> || <p>{this.state.computeResult}</p>
 				}
 
-				<a href={process.env.PUBLIC_URL + "/chart"}>Здесь можно построить график</a>
+				<NavLink to="/chart">Здесь можно построить график</NavLink>
 
 				<h3>Последние вычисленные функции:</h3>
 				<div id="lastComputedFunctions">	
