@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/math-parser-front-react/static/js/main.ded3fff5.js",
+    "main.js": "/math-parser-front-react/static/js/main.04d96d28.js",
     "static/js/787.3624ca1f.chunk.js": "/math-parser-front-react/static/js/787.3624ca1f.chunk.js",
     "index.html": "/math-parser-front-react/index.html",
-    "main.ded3fff5.js.map": "/math-parser-front-react/static/js/main.ded3fff5.js.map",
+    "main.04d96d28.js.map": "/math-parser-front-react/static/js/main.04d96d28.js.map",
     "787.3624ca1f.chunk.js.map": "/math-parser-front-react/static/js/787.3624ca1f.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.ded3fff5.js"
+    "static/js/main.04d96d28.js"
   ]
 }
