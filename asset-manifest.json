@@ -1,19 +1,12 @@
 {
   "files": {
-    "main.js": "/math-parser-front-react/static/js/main.e10da2b4.chunk.js",
-    "main.js.map": "/math-parser-front-react/static/js/main.e10da2b4.chunk.js.map",
-    "runtime-main.js": "/math-parser-front-react/static/js/runtime-main.584a7e46.js",
-    "runtime-main.js.map": "/math-parser-front-react/static/js/runtime-main.584a7e46.js.map",
-    "static/js/2.11a2e104.chunk.js": "/math-parser-front-react/static/js/2.11a2e104.chunk.js",
-    "static/js/2.11a2e104.chunk.js.map": "/math-parser-front-react/static/js/2.11a2e104.chunk.js.map",
-    "static/js/3.6e9ef364.chunk.js": "/math-parser-front-react/static/js/3.6e9ef364.chunk.js",
-    "static/js/3.6e9ef364.chunk.js.map": "/math-parser-front-react/static/js/3.6e9ef364.chunk.js.map",
+    "main.js": "/math-parser-front-react/static/js/main.ded3fff5.js",
+    "static/js/787.3624ca1f.chunk.js": "/math-parser-front-react/static/js/787.3624ca1f.chunk.js",
     "index.html": "/math-parser-front-react/index.html",
-    "static/js/2.11a2e104.chunk.js.LICENSE.txt": "/math-parser-front-react/static/js/2.11a2e104.chunk.js.LICENSE.txt"
+    "main.ded3fff5.js.map": "/math-parser-front-react/static/js/main.ded3fff5.js.map",
+    "787.3624ca1f.chunk.js.map": "/math-parser-front-react/static/js/787.3624ca1f.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.584a7e46.js",
-    "static/js/2.11a2e104.chunk.js",
-    "static/js/main.e10da2b4.chunk.js"
+    "static/js/main.ded3fff5.js"
   ]
 }
