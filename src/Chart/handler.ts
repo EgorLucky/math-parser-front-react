@@ -1,11 +1,9 @@
 import Chart from 'chart.js';
 
-import {appConfiguration} from "../configuration";
-import {mathParserService} from "../mathparserService";
+import { Compute2DIntervalPlotRequestModel } from '../mathparserService/compute2DIntervalPlotRequesModel';
+import {mathParserService} from "../mathparserService/mathparserService";
 import ChartPage from './index.jsx';
 
-const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
-mathParserService.setConfiguration(appConfiguration, environment);
 let destroyPreviousChart: any;
 
 export class ChartHandler{
@@ -130,19 +128,14 @@ export class ChartHandler{
 		});
 	}
 	
-	getParams() {
+	getParams(): Compute2DIntervalPlotRequestModel {
 		const {xMin, xMax, xStep, expression} = this.chartComponent.state;
 
 		if (isNaN(xMin) ||
 			isNaN(xMax) ||
 			isNaN(xStep))
-			return {
-				xMin: 0,
-				xMax: 5,
-				xStep: 1,
-				expression: expression
-			};
+			return new Compute2DIntervalPlotRequestModel(expression, 5, 0, 1);
 
-		return {xMin, xMax, xStep, expression};
+		return new Compute2DIntervalPlotRequestModel(expression, xMax, xMin, xStep);
 	}
 }

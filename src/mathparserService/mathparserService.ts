@@ -1,36 +1,27 @@
+import { AppConfiguration } from "../configuration";
+import { Compute2DIntervalPlotRequestModel } from "./compute2DIntervalPlotRequesModel";
+import { ComputeExpressionRequestModel } from "./computeExpressionRequestModel";
+import { Parameter } from "./parameter";
 export const mathParserService = {
-	serviceHost : "",
-	setConfiguration(configuration: any, environment: string){
-		this.serviceHost = (environment === "production")? 
-							configuration.mathParserServiceUrlProd: 
-							configuration.mathParserServiceUrlLocal;
-	},
+	serviceHost: AppConfiguration.environment === "production"? 
+							AppConfiguration.mathParserServiceUrlProd: 
+							AppConfiguration.mathParserServiceUrlLocal,
 
 	getLast: async function(limit: number){
 		const response = await fetch(this.serviceHost + '/api/math/getLast?limit=' + limit);
 
 		return await getResponseContent(response);
 	},
-	computeExpression: async function(expression: string, parameters: any) {
-		const payloadObject = {
-			expression: expression,
-			parameters: parameters
-		};
+	computeExpression: async function(expression: string, parameters: Array<Parameter>) {
+		const payloadObject = new ComputeExpressionRequestModel(expression, parameters);
 		
 		const response = await this.myFetch('/api/math/computeExpression', payloadObject);
 
 		return response;
 	},
 	
-	compute2DIntervalPlot: async function({expression, xMax, xMin, xStep} : any) {
-		const payloadObject = {
-			expression,
-			max: xMax,
-			min: xMin,
-			step: xStep
-		};
-		
-		const response = await this.myFetch('/api/math/compute2DIntervalPlot', payloadObject);
+	compute2DIntervalPlot: async function(request : Compute2DIntervalPlotRequestModel) {
+		const response = await this.myFetch('/api/math/compute2DIntervalPlot', request);
 
 		return response;
 	},

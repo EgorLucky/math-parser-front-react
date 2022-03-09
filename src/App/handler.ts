@@ -1,12 +1,8 @@
-import { Component } from "react";
-import {appConfiguration} from "../configuration";
-import {mathParserService} from "../mathparserService";
+import { Parameter } from "../mathparserService/parameter";
+import { mathParserService } from "../mathparserService/mathparserService";
 
 import {MAX_PARAMETERS_COUNT} from "./constants";
 import App from "./index";
-
-const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
-mathParserService.setConfiguration(appConfiguration, environment);
 
 export class IndexHandler{
     constructor(indexComponent: App){
@@ -83,10 +79,15 @@ export class IndexHandler{
 		
 		const expressionText = this.indexComponent.state.expression;
 		
-		const parameters = this.indexComponent.state.parametersArray.map((p: any) => ({
-			variableName: p.name,
-			value: p.value
-		}));
+		const parameters = this
+							.indexComponent
+							.state
+							.parametersArray
+							.map((p: any) =>  
+							new Parameter(
+								p.name as string,
+								p.value
+		));
 		
 		this.indexComponent.setState({isComputing: true});
 		

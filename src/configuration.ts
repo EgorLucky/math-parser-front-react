@@ -1,4 +1,5 @@
-export const appConfiguration = {
-	mathParserServiceUrlProd:"https://mathparser.herokuapp.com",
-	mathParserServiceUrlLocal:"http://localhost:5000"
+export class AppConfiguration {
+	static environment: string = "production"
+	static mathParserServiceUrlProd: string = "https://mathparser.herokuapp.com"
+	static mathParserServiceUrlLocal: string = "http://localhost:5000"
 };
