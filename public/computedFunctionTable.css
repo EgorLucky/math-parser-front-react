@@ -1,6 +1,10 @@
-.computed-function-table {
+table td, table th.computed-function-table {
     font-size: xx-large; 
     width: 100%; 
+    border: solid 1px black;
+}
+
+table.computed-function-table {
     margin-bottom: 10px;
-    border: solid 1px;
+    border: solid 1px black;
 }

@@ -2,7 +2,6 @@ function ComputedFunctionItem(props: any) {
 	 return (
 		<table 
 			className="computed-function-table"
-			/*border="1"*/
 			cellSpacing="0"
 		>
 			<tbody>
