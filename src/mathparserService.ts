@@ -1,16 +1,17 @@
 export const mathParserService = {
-	setConfiguration(configuration, environment){
+	serviceHost : "",
+	setConfiguration(configuration: any, environment: string){
 		this.serviceHost = (environment === "production")? 
 							configuration.mathParserServiceUrlProd: 
 							configuration.mathParserServiceUrlLocal;
 	},
 
-	getLast: async function(limit){
+	getLast: async function(limit: number){
 		const response = await fetch(this.serviceHost + '/api/math/getLast?limit=' + limit);
 
 		return await getResponseContent(response);
 	},
-	computeExpression: async function(expression, parameters) {
+	computeExpression: async function(expression: string, parameters: any) {
 		const payloadObject = {
 			expression: expression,
 			parameters: parameters
@@ -21,7 +22,7 @@ export const mathParserService = {
 		return response;
 	},
 	
-	compute2DIntervalPlot: async function({expression, xMax, xMin, xStep}) {
+	compute2DIntervalPlot: async function({expression, xMax, xMin, xStep} : any) {
 		const payloadObject = {
 			expression,
 			max: xMax,
@@ -34,7 +35,7 @@ export const mathParserService = {
 		return response;
 	},
 
-	myFetch: async function(url, body){
+	myFetch: async function(url: string, body: any){
 		const response = await fetch(this.serviceHost + url,
 		{
 			method: "post",
@@ -48,12 +49,12 @@ export const mathParserService = {
 	}
 };
 
-async function getResponseContent(response)
+async function getResponseContent(response: Response)
 {
 	let content = null;
 			
 	if(response.status === 200 || 
-		response.headers.get("content-type").includes("application/json"))
+		response.headers.get("content-type")?.includes("application/json"))
 		content = await response.json();
 	else 
 		content = await response.text();

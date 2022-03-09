@@ -1,11 +1,11 @@
 import {parameterNameFieldName, parameterValueFieldName} from "./constants";
 
-function ParameterDiv(props) {
+function ParameterDiv(props: any) {
 
 	const { id, name, value, onTextChanged, deleteParameter } = props;
 
-	const nameTextChanged = e => onTextChanged(e, id, parameterNameFieldName);
-	const valueTextChanged = e => onTextChanged(e, id, parameterValueFieldName);
+	const nameTextChanged = (e: any) => onTextChanged(e, id, parameterNameFieldName);
+	const valueTextChanged = (e: any) => onTextChanged(e, id, parameterValueFieldName);
 	const onDeleteParameter = () => deleteParameter(id);
 
 	return (

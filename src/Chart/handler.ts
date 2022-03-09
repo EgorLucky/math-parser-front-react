@@ -1,16 +1,19 @@
 import Chart from 'chart.js';
 
-import {appConfiguration} from "../configuration.js";
-import {mathParserService} from "../mathparserService.js";
+import {appConfiguration} from "../configuration";
+import {mathParserService} from "../mathparserService";
+import ChartPage from './index.jsx';
 
 const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
 mathParserService.setConfiguration(appConfiguration, environment);
-let destroyPreviousChart = null;
+let destroyPreviousChart: any;
 
 export class ChartHandler{
-    constructor(chartComponent){
+    constructor(chartComponent: ChartPage){
         this.chartComponent = chartComponent;
     }
+
+	chartComponent: ChartPage;
 
     async draw(){
 		const params = this.getParams();
@@ -41,7 +44,7 @@ export class ChartHandler{
 		if(computeResponse.status !== 200)
 		{
 			const message = computeResponse?.content?.message;
-			if(computeResponse.contentType.includes("json") 
+			if(computeResponse.contentType?.includes("json") 
 				&& message !== undefined)
 				errorMesssage = "Ошибка! Ответ от сервера: " + message;
 			else 
@@ -65,7 +68,7 @@ export class ChartHandler{
 		if(destroyPreviousChart != null)
 			destroyPreviousChart();
 
-		const lables = points.map(p => p.x);
+		const lables = points.map((p: any) => p.x);
 
 		const data = {
 			//args
@@ -73,8 +76,8 @@ export class ChartHandler{
 			datasets: [
 			{
 					label: "mathFunction",
-					function: x => points.filter(p => p.x === x)
-										.map(p => p.y),
+					function: (x: any) => points.filter((p: any) => p.x === x)
+										.map((p: any) => p.y),
 				borderColor: "rgba(255, 206, 86, 1)",
 				data: [],
 				fill: false
@@ -82,21 +85,25 @@ export class ChartHandler{
 		};
 
 		Chart.pluginService.register({
-			beforeInit: function (chart) {
+			beforeInit: function (chart: any) {
 				const data = chart.config.data;
-				for (let i = 0; i < data.datasets.length; i++) {
+				for (let i = 0; i < data?.datasets?.length; i++) {
 					for (let j = 0; j < data.labels.length; j++) {
 						const func = data.datasets[i].function,
 							x = data.labels[j],
 							functionValues = func(x);
-						functionValues.map(y => data.datasets[i].data.push(y));
+						functionValues.map((y: any) => data.datasets[i].data.push(y));
 					}
 				}
 			}
 		});
 		
 		const ctx = document.getElementById("myChart");
-		const myBarChart = new Chart(ctx, {
+		if(ctx == null){
+			console.log(`document.getElementById("myChart") is null!!!!!`);
+			return;
+		}
+		const myBarChart = new Chart(ctx as HTMLCanvasElement, {
 			type: 'line',
 			data: data,
 			options: {

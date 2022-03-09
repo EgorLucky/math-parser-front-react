@@ -10,8 +10,8 @@ import { IndexHandler } from "./handler";
 
 
 
-class App extends Component {
-	constructor (props){
+class App extends Component<any, any> {
+	constructor (props: any){
 		 super(props); 
 		 this.state = {
 				parametersArray:[],
@@ -24,7 +24,9 @@ class App extends Component {
 		this.handler = new IndexHandler(this);
 	}
 
-	onExpressionChange = e => this.setState({expression: e.currentTarget.value});
+	handler: IndexHandler;
+
+	onExpressionChange = (e: any) => this.setState({expression: e.currentTarget.value});
 
 	computeButtonClicked = () => this.handler.computeButtonClicked();
 
@@ -58,7 +60,7 @@ class App extends Component {
 				<br/>
 				<div id="parameters">
 					{
-						this.state.parametersArray.map(i => {
+						this.state.parametersArray.map((i: any) => {
 							return <ParameterDiv
 								key={i.key}
 								id={i.key}
@@ -82,7 +84,7 @@ class App extends Component {
 						this.state.lastComputedFunctions.length === 0 && (<Loader/>)
 					}
 					{
-						this.state.lastComputedFunctions.map(f => 
+						this.state.lastComputedFunctions.map((f: any) => 
 						{
 							return <ComputedFunctionItem 
 									key={f.id}

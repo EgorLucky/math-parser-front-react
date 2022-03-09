@@ -1,13 +1,13 @@
-function ComputedFunctionItem(props) {
+function ComputedFunctionItem(props: any) {
 	 return (
 		<table 
 			className="computed-function-table"
-			border="1"
+			/*border="1"*/
 			cellSpacing="0"
 		>
 			<tbody>
 				<tr>
-					<td colSpan="2">
+					<td colSpan={2}>
 					{props.functionNotation}
 					</td>
 				</tr>
@@ -20,7 +20,7 @@ function ComputedFunctionItem(props) {
 					</td>
 				</tr>
 				{
-					props.parametersAndValues.map(pv => 
+					props.parametersAndValues.map((pv: any) => 
 					{
 						return (
 							<tr key={pv.id}>

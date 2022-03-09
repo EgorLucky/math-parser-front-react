@@ -6,8 +6,8 @@ import Loader from '../Components/Loader';
 import { ChartHandler } from "./handler";
 import { xMin, xMax, xStep } from "./constants";
 
-class ChartPage extends Component {
-	constructor(props){
+class ChartPage extends Component<any, any> {
+	constructor(props: any){
 		super(props);
 		
 		this.state = {
@@ -27,19 +27,22 @@ class ChartPage extends Component {
 		};
 	}
 
-	onNumberFieldChanged(property, e) {
-		const newState = {};
+	handler: ChartHandler;
+	canvasStyle: any;
+
+	onNumberFieldChanged(property: string, e: any) {
+		const newState: any = {};
 		newState[property] = Number(e.currentTarget.value);
 		this.setState(newState);
 	}
 
-	onExpressionChange = e => this.setState({expression: e.currentTarget.value});
+	onExpressionChange = (e: any) => this.setState({expression: e.currentTarget.value});
 
-	onXMinChange = e => this.onNumberFieldChanged(xMin, e);
+	onXMinChange = (e: any) => this.onNumberFieldChanged(xMin, e);
 
-	onXMaxChange = e => this.onNumberFieldChanged(xMax, e);
+	onXMaxChange = (e: any) => this.onNumberFieldChanged(xMax, e);
 
-	onXStepChange = e => this.onNumberFieldChanged(xStep, e);
+	onXStepChange = (e: any) => this.onNumberFieldChanged(xStep, e);
 
 	draw = () => this.handler.draw();
 	

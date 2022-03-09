@@ -1,18 +1,22 @@
-import {appConfiguration} from "../configuration.js";
-import {mathParserService} from "../mathparserService.js";
+import { Component } from "react";
+import {appConfiguration} from "../configuration";
+import {mathParserService} from "../mathparserService";
 
 import {MAX_PARAMETERS_COUNT} from "./constants";
+import App from "./index";
 
 const environment = /*(document.location.host.startsWith('127') || document.location.host.startsWith("localhost")) ? "development": */"production";
 mathParserService.setConfiguration(appConfiguration, environment);
 
 export class IndexHandler{
-    constructor(indexComponent){
+    constructor(indexComponent: App){
         this.indexComponent = indexComponent;
     }
+	
+	indexComponent: App;
 
     addParameter() {
-		const parameters = this.indexComponent.state.parametersArray;
+		const parameters = this.indexComponent?.state?.parametersArray;
 		
 		if(parameters.length === MAX_PARAMETERS_COUNT) {
 			alert("Не более 5 параметров!");
@@ -24,11 +28,11 @@ export class IndexHandler{
 				: parameters[parameters.length - 1].key + 1;
 			
 		const parameterProps = {
-			deleteParameter: (key) => this.deleteParameter(key), 
+			deleteParameter: (key: number) => this.deleteParameter(key), 
 			key: key,
 			name: "",
 			value: "",
-			onTextChanged: (e, key, property) => this.parameterTextChanged(e, key, property)
+			onTextChanged: (e: any, key: number, property: any) => this.parameterTextChanged(e, key, property)
 		};
 		
 		parameters.push(parameterProps);
@@ -37,11 +41,11 @@ export class IndexHandler{
 		
 	}
 
-	parameterTextChanged(e, key, property) {
+	parameterTextChanged(e: any, key: number, property: any) {
 		const stateParameter = this.indexComponent
 									.state
 									.parametersArray
-									.filter(p => p.key === key)[0];
+									.filter((p: any) => p.key === key)[0];
 		stateParameter[property] = e.currentTarget.value;
 
 		this.indexComponent.setState({parametersArray: this.indexComponent
@@ -49,12 +53,12 @@ export class IndexHandler{
 														.parametersArray});
 	}
 	
-	deleteParameter(key) {
+	deleteParameter(key: number) {
 		const parameters = this
 						.indexComponent
 						.state
 						.parametersArray
-						.filter(p => p.key !== key);
+						.filter((p: any) => p.key !== key);
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	
@@ -62,11 +66,11 @@ export class IndexHandler{
 		const response = await mathParserService.getLast(20);
 
 		let id = 0;
-		const lastComputedFunctions = response.content.map(c => {
+		const lastComputedFunctions = response.content.map((c: any) => {
 			c["id"] = id++;
 			
 			let paramAndValueId = 0;
-			c.parametersAndValues.map(pv => pv["id"] = paramAndValueId++);
+			c.parametersAndValues.map((pv: any) => pv["id"] = paramAndValueId++);
 			return c;
 		});
 
@@ -79,7 +83,7 @@ export class IndexHandler{
 		
 		const expressionText = this.indexComponent.state.expression;
 		
-		const parameters = this.indexComponent.state.parametersArray.map(p => ({
+		const parameters = this.indexComponent.state.parametersArray.map((p: any) => ({
 			variableName: p.name,
 			value: p.value
 		}));
@@ -112,7 +116,7 @@ export class IndexHandler{
 		}
 		else
 		{
-			if(response.contentType.includes("json") 
+			if(response.contentType?.includes("json") 
 				&& response?.content?.message !== undefined) 
 			{
             	this.indexComponent.setState({
