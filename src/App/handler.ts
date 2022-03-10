@@ -3,6 +3,8 @@ import { mathParserService } from "../mathparserService/mathparserService";
 
 import {MAX_PARAMETERS_COUNT} from "./constants";
 import App from "./index";
+import { ComputedFunction } from "../mathparserService/responseModels/computedFunction";
+import { ComputeExpressionResult } from "../mathparserService/responseModels/computeExpressionResult";
 
 export class IndexHandler{
     constructor(indexComponent: App){
@@ -62,7 +64,10 @@ export class IndexHandler{
 		const response = await mathParserService.getLast(20);
 
 		let id = 0;
-		const lastComputedFunctions = response.content.map((c: any) => {
+		
+		const responseContent = response.content as Array<ComputedFunction>
+
+		const lastComputedFunctions = responseContent.map((c: any) => {
 			c["id"] = id++;
 			
 			let paramAndValueId = 0;
@@ -109,19 +114,21 @@ export class IndexHandler{
 		}
 
 		if(response.status === 200)
-		{			
+		{
+			const responseContent = response?.content as ComputeExpressionResult			
 			this.indexComponent.setState({
 				isComputing: false,
-				computeResult: response?.content?.result
+				computeResult: responseContent?.result
 			});
 		}
 		else
 		{
+			const responseContent = response?.content as any
 			if(response.contentType?.includes("json") 
-				&& response?.content?.message !== undefined) 
+				&& responseContent?.message !== undefined) 
 			{
             	this.indexComponent.setState({
-					computeResult: "Ошибка! Ответ от сервера: " + response.content.message,
+					computeResult: "Ошибка! Ответ от сервера: " + responseContent.message,
 					isComputing: false
 				});
 			}

@@ -2,6 +2,7 @@ import Chart from 'chart.js';
 
 import { Compute2DIntervalPlotRequestModel } from '../mathparserService/compute2DIntervalPlotRequesModel';
 import {mathParserService} from "../mathparserService/mathparserService";
+import { Compute2DIntervalPlotResult } from '../mathparserService/responseModels/compute2DIntervalPlotResult';
 import ChartPage from './index.jsx';
 
 let destroyPreviousChart: any;
@@ -41,7 +42,8 @@ export class ChartHandler{
 
 		if(computeResponse.status !== 200)
 		{
-			const message = computeResponse?.content?.message;
+			const computeResponseContent = computeResponse?.content as any
+			const message = computeResponseContent?.message;
 			if(computeResponse.contentType?.includes("json") 
 				&& message !== undefined)
 				errorMesssage = "Ошибка! Ответ от сервера: " + message;
@@ -61,7 +63,8 @@ export class ChartHandler{
 		
 		this.chartComponent.setState({errorMessage: ""});
 
-		const points = computeResponse.content.result;
+		const successFullcomputeResponse = computeResponse.content as Compute2DIntervalPlotResult	
+		const points = successFullcomputeResponse.result;
 
 		if(destroyPreviousChart != null)
 			destroyPreviousChart();
