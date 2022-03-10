@@ -1,4 +1,4 @@
-import { Parameter } from "../mathparserService/parameter";
+import { Parameter } from "../mathparserService/requestModels/parameter";
 import { mathParserService } from "../mathparserService/mathparserService";
 
 import {MAX_PARAMETERS_COUNT} from "./constants";

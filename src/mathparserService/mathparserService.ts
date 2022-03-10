@@ -1,7 +1,7 @@
 import { AppConfiguration } from "../configuration";
-import { Compute2DIntervalPlotRequestModel } from "./compute2DIntervalPlotRequesModel";
-import { ComputeExpressionRequestModel } from "./computeExpressionRequestModel";
-import { Parameter } from "./parameter";
+import { Compute2DIntervalPlotRequestModel } from "./requestModels/compute2DIntervalPlotRequesModel";
+import { ComputeExpressionRequestModel } from "./requestModels/computeExpressionRequestModel";
+import { Parameter } from "./requestModels/parameter";
 import { ResponseContent } from "./responseModels/responseContent";
 import { ComputedFunction } from "./responseModels/computedFunction";
 import { ComputeExpressionResult } from "./responseModels/computeExpressionResult";

@@ -1,6 +1,6 @@
 import Chart from 'chart.js';
 
-import { Compute2DIntervalPlotRequestModel } from '../mathparserService/compute2DIntervalPlotRequesModel';
+import { Compute2DIntervalPlotRequestModel } from '../mathparserService/requestModels/compute2DIntervalPlotRequesModel';
 import {mathParserService} from "../mathparserService/mathparserService";
 import { Compute2DIntervalPlotResult } from '../mathparserService/responseModels/compute2DIntervalPlotResult';
 import ChartPage from './index.jsx';
