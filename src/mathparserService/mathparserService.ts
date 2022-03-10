@@ -2,31 +2,31 @@ import { AppConfiguration } from "../configuration";
 import { Compute2DIntervalPlotRequestModel } from "./compute2DIntervalPlotRequesModel";
 import { ComputeExpressionRequestModel } from "./computeExpressionRequestModel";
 import { Parameter } from "./parameter";
-export const mathParserService = {
-	serviceHost: AppConfiguration.environment === "production"? 
+
+class MathParserService {
+	serviceHost: string = AppConfiguration.environment === "production"? 
 							AppConfiguration.mathParserServiceUrlProd: 
-							AppConfiguration.mathParserServiceUrlLocal,
+							AppConfiguration.mathParserServiceUrlLocal;
 
-	getLast: async function(limit: number){
+	async getLast(limit: number): Promise<any> {
 		const response = await fetch(this.serviceHost + '/api/math/getLast?limit=' + limit);
+		return await this.getResponseContent(response);
+	}
 
-		return await getResponseContent(response);
-	},
-	computeExpression: async function(expression: string, parameters: Array<Parameter>) {
+	async computeExpression(
+		expression: string, 
+		parameters: Array<Parameter>): Promise<any> {
 		const payloadObject = new ComputeExpressionRequestModel(expression, parameters);
-		
 		const response = await this.myFetch('/api/math/computeExpression', payloadObject);
-
 		return response;
-	},
+	}
 	
-	compute2DIntervalPlot: async function(request : Compute2DIntervalPlotRequestModel) {
+	async compute2DIntervalPlot(request : Compute2DIntervalPlotRequestModel): Promise<any> {
 		const response = await this.myFetch('/api/math/compute2DIntervalPlot', request);
-
 		return response;
-	},
+	}
 
-	myFetch: async function(url: string, body: any){
+	async myFetch(url: string, body: any): Promise<any> {
 		const response = await fetch(this.serviceHost + url,
 		{
 			method: "post",
@@ -36,25 +36,27 @@ export const mathParserService = {
 			body: JSON.stringify(body)
 		});
 
-		return await getResponseContent(response);
+		return await this.getResponseContent(response);
+	}
+
+	async getResponseContent(response: Response): Promise<any>
+	{
+		let content = null;
+				
+		if(response.status === 200 || 
+			response.headers.get("content-type")?.includes("application/json"))
+			content = await response.json();
+		else 
+			content = await response.text();
+
+		const result = {
+			status : response.status,
+			content: content,
+			contentType: response.headers.get("content-type")
+		};
+
+		return result;
 	}
 };
 
-async function getResponseContent(response: Response)
-{
-	let content = null;
-			
-	if(response.status === 200 || 
-		response.headers.get("content-type")?.includes("application/json"))
-		content = await response.json();
-	else 
-		content = await response.text();
-
-	const result = {
-		status : response.status,
-		content: content,
-		contentType: response.headers.get("content-type")
-	};
-
-	return result;
-}
+export const mathParserService = new MathParserService();
