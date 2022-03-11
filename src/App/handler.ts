@@ -5,6 +5,7 @@ import {MAX_PARAMETERS_COUNT} from "./constants";
 import App from "./index";
 import { ComputedFunction } from "../mathparserService/responseModels/computedFunction";
 import { ComputeExpressionResult } from "../mathparserService/responseModels/computeExpressionResult";
+import { ChangeEvent } from "react";
 
 export class IndexHandler{
     constructor(indexComponent: App){
@@ -30,7 +31,7 @@ export class IndexHandler{
 			key: key,
 			name: "",
 			value: "",
-			onTextChanged: (e: any, key: number, property: any) => this.parameterTextChanged(e, key, property)
+			onTextChanged: (e: ChangeEvent<HTMLInputElement>, key: number, property: any) => this.parameterTextChanged(e, key, property)
 		};
 		
 		parameters.push(parameterProps);
@@ -39,7 +40,7 @@ export class IndexHandler{
 		
 	}
 
-	parameterTextChanged(e: any, key: number, property: any) {
+	parameterTextChanged(e: ChangeEvent<HTMLInputElement>, key: number, property: any) {
 		const stateParameter = this.indexComponent
 									.state
 									.parametersArray

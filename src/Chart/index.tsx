@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Loader from '../Components/Loader';
@@ -30,19 +30,19 @@ class ChartPage extends Component<any, any> {
 	handler: ChartHandler;
 	canvasStyle: any;
 
-	onNumberFieldChanged(property: string, e: any) {
+	onNumberFieldChanged(property: string, e: ChangeEvent<HTMLInputElement>) {
 		const newState: any = {};
 		newState[property] = Number(e.currentTarget.value);
 		this.setState(newState);
 	}
 
-	onExpressionChange = (e: any) => this.setState({expression: e.currentTarget.value});
+	onExpressionChange = (e: ChangeEvent<HTMLTextAreaElement>) => this.setState({expression: e.currentTarget.value});
 
-	onXMinChange = (e: any) => this.onNumberFieldChanged(xMin, e);
+	onXMinChange = (e: ChangeEvent<HTMLInputElement>) => this.onNumberFieldChanged(xMin, e);
 
-	onXMaxChange = (e: any) => this.onNumberFieldChanged(xMax, e);
+	onXMaxChange = (e: ChangeEvent<HTMLInputElement>) => this.onNumberFieldChanged(xMax, e);
 
-	onXStepChange = (e: any) => this.onNumberFieldChanged(xStep, e);
+	onXStepChange = (e: ChangeEvent<HTMLInputElement>) => this.onNumberFieldChanged(xStep, e);
 
 	draw = () => this.handler.draw();
 	

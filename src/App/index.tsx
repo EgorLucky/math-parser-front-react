@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import AppDescription from '../Components/AppDescription';
@@ -26,7 +26,7 @@ class App extends Component<any, any> {
 
 	handler: IndexHandler;
 
-	onExpressionChange = (e: any) => this.setState({expression: e.currentTarget.value});
+	onExpressionChange = (e: ChangeEvent<HTMLTextAreaElement>) => this.setState({expression: e.currentTarget.value});
 
 	computeButtonClicked = () => this.handler.computeButtonClicked();
 
