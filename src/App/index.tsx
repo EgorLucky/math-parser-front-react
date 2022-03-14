@@ -7,19 +7,15 @@ import ComputedFunctionItem from '../Components/ComputedFunctionItem';
 import Loader from '../Components/Loader';
 
 import { IndexHandler } from "./handler";
+import { AppProps } from './appProps';
+import { AppState } from './appState';
 
 
 
-class App extends Component<any, any> {
-	constructor (props: any){
+class App extends Component<AppProps, AppState> {
+	constructor (props: AppProps){
 		 super(props); 
-		 this.state = {
-				parametersArray:[],
-				lastComputedFunctions:[],
-				isComputing: false,
-				computeResult: "",
-				expression: ""
-			};
+		 this.state = new AppState();
 
 		this.handler = new IndexHandler(this);
 	}

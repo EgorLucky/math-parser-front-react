@@ -5,8 +5,10 @@ import Loader from '../Components/Loader';
 
 import { ChartHandler } from "./handler";
 import { xMin, xMax, xStep } from "./constants";
+import { ChartProps } from './chartProps';
+import { ChartState } from './chartState';
 
-class ChartPage extends Component<any, any> {
+class ChartPage extends Component<ChartProps, ChartState> {
 	constructor(props: any){
 		super(props);
 		

@@ -119,7 +119,7 @@ export class IndexHandler{
 			const responseContent = response?.content as ComputeExpressionResult			
 			this.indexComponent.setState({
 				isComputing: false,
-				computeResult: responseContent?.result
+				computeResult: responseContent?.result?.toString()
 			});
 		}
 		else
