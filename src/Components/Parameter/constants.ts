@@ -1,2 +1,2 @@
-export const parameterNameFieldName = "name";
+export const parameterNameFieldName = "variableName";
 export const parameterValueFieldName = "value";

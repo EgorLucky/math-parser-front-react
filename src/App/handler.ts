@@ -6,6 +6,7 @@ import App from "./index";
 import { ComputedFunction } from "../mathparserService/responseModels/computedFunction";
 import { ComputeExpressionResult } from "../mathparserService/responseModels/computeExpressionResult";
 import { ChangeEvent } from "react";
+import { ResponseContent } from "../mathparserService/responseModels/responseContent";
 
 export class IndexHandler{
     constructor(indexComponent: App){
@@ -29,8 +30,7 @@ export class IndexHandler{
 		const parameterProps = {
 			deleteParameter: (key: number) => this.deleteParameter(key), 
 			key: key,
-			name: "",
-			value: "",
+			parameter: new Parameter(),
 			onTextChanged: (e: ChangeEvent<HTMLInputElement>, key: number, property: any) => this.parameterTextChanged(e, key, property)
 		};
 		
@@ -40,12 +40,12 @@ export class IndexHandler{
 		
 	}
 
-	parameterTextChanged(e: ChangeEvent<HTMLInputElement>, key: number, property: any) {
+	parameterTextChanged(e: ChangeEvent<HTMLInputElement>, key: number, property: string) {
 		const stateParameter = this.indexComponent
 									.state
 									.parametersArray
-									.filter((p: any) => p.key === key)[0];
-		stateParameter[property] = e.currentTarget.value;
+									.filter(p => p.key === key)[0] as any;
+		stateParameter.parameter[property] = e.currentTarget.value;
 
 		this.indexComponent.setState({parametersArray: this.indexComponent
 														.state
@@ -57,7 +57,7 @@ export class IndexHandler{
 						.indexComponent
 						.state
 						.parametersArray
-						.filter((p: any) => p.key !== key);
+						.filter(p => p.key !== key);
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	
@@ -89,15 +89,15 @@ export class IndexHandler{
 							.indexComponent
 							.state
 							.parametersArray
-							.map((p: any) =>  
+							.map(p =>  
 							new Parameter(
-								p.name as string,
-								p.value
+								p.parameter.variableName,
+								p.parameter.value
 		));
 		
 		this.indexComponent.setState({isComputing: true});
 		
-		let response = null;
+		let response: ResponseContent<ComputeExpressionResult>;
 		try{
 			response = await mathParserService.computeExpression(expressionText, parameters);
 		}
