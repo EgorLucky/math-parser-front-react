@@ -9,7 +9,7 @@ import { ChartProps } from './chartProps';
 import { ChartState } from './chartState';
 
 class ChartPage extends Component<ChartProps, ChartState> {
-	constructor(props: any){
+	constructor(props: ChartProps){
 		super(props);
 		
 		this.state = {
