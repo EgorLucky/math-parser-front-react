@@ -7,6 +7,7 @@ import { ComputedFunction } from "../mathparserService/responseModels/computedFu
 import { ComputeExpressionResult } from "../mathparserService/responseModels/computeExpressionResult";
 import { ChangeEvent } from "react";
 import { ResponseContent } from "../mathparserService/responseModels/responseContent";
+import { ComputedFuctionState } from "./computedFunctionState";
 
 export class IndexHandler{
     constructor(indexComponent: App){
@@ -68,7 +69,7 @@ export class IndexHandler{
 		
 		const responseContent = response.content as Array<ComputedFunction>
 
-		const lastComputedFunctions = responseContent.map((c: any) => {
+		const lastComputedFunctions = responseContent.map<ComputedFuctionState>((c: any) => {
 			c["id"] = id++;
 			
 			let paramAndValueId = 0;
