@@ -80,12 +80,11 @@ class App extends Component<AppProps, AppState> {
 						this.state.lastComputedFunctions.length === 0 && (<Loader/>)
 					}
 					{
-						this.state.lastComputedFunctions.map((f: any) => 
+						this.state.lastComputedFunctions.map(f => 
 						{
 							return <ComputedFunctionItem 
 									key={f.id}
-									functionNotation={f.functionNotation}
-									parametersAndValues={f.parametersAndValues}
+									{...f}
 									/>
 						})
 					}

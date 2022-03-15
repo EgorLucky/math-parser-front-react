@@ -1,4 +1,6 @@
-function ComputedFunctionItem(props: any) {
+import { ComputedFunction } from "../../mathparserService/responseModels/computedFunction";
+
+function ComputedFunctionItem(props: ComputedFunction) {
 	 return (
 		<table 
 			className="computed-function-table"
@@ -19,7 +21,7 @@ function ComputedFunctionItem(props: any) {
 					</td>
 				</tr>
 				{
-					props.parametersAndValues.map((pv: any) => 
+					props.parametersAndValues.map(pv => 
 					{
 						return (
 							<tr key={pv.id}>
