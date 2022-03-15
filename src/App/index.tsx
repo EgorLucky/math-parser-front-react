@@ -14,8 +14,8 @@ import { AppState } from './appState';
 
 class App extends Component<AppProps, AppState> {
 	constructor (props: AppProps){
-		 super(props); 
-		 this.state = new AppState();
+		super(props); 
+		this.state = new AppState();
 
 		this.handler = new IndexHandler(this);
 	}
