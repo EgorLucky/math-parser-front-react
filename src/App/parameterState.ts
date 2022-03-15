@@ -5,5 +5,5 @@ export class ParameterState {
     deleteParameter?: (key: number) => void
     key = 0
     parameter: Parameter = new Parameter()
-    onTextChanged?: (e: ChangeEvent<HTMLInputElement>, key: number, property: any) => void
+    onTextChanged?: (e: ChangeEvent<HTMLInputElement>, key: number, property: string) => void
 }

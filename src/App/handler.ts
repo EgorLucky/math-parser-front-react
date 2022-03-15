@@ -32,7 +32,7 @@ export class IndexHandler{
 			deleteParameter: (key: number) => this.deleteParameter(key), 
 			key: key,
 			parameter: new Parameter(),
-			onTextChanged: (e: ChangeEvent<HTMLInputElement>, key: number, property: any) => this.parameterTextChanged(e, key, property)
+			onTextChanged: (e: ChangeEvent<HTMLInputElement>, key: number, property: string) => this.parameterTextChanged(e, key, property)
 		};
 		
 		parameters.push(parameterProps);
