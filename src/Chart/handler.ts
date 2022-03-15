@@ -1,11 +1,12 @@
-import Chart from 'chart.js';
+import Chart, { ChartData, ChartDataSets } from 'chart.js';
 
 import { Compute2DIntervalPlotRequestModel } from '../mathparserService/requestModels/compute2DIntervalPlotRequesModel';
 import {mathParserService} from "../mathparserService/mathparserService";
 import { Compute2DIntervalPlotResult } from '../mathparserService/responseModels/compute2DIntervalPlotResult';
 import ChartPage from './index.jsx';
+import { ResponseContent } from '../mathparserService/responseModels/responseContent';
 
-let destroyPreviousChart: any;
+let destroyPreviousChart: () => void;
 
 export class ChartHandler{
     constructor(chartComponent: ChartPage){
@@ -19,7 +20,7 @@ export class ChartHandler{
 		
 		this.chartComponent.setState({isComputing: true});
 		
-		let computeResponse = null;
+		let computeResponse: ResponseContent<Compute2DIntervalPlotResult>;
 		let errorMesssage = "";
 		try{
 			computeResponse = await mathParserService.compute2DIntervalPlot(params);
@@ -69,31 +70,34 @@ export class ChartHandler{
 		if(destroyPreviousChart != null)
 			destroyPreviousChart();
 
-		const lables = points.map((p: any) => p.x);
+		const lables = points.map(p => p.x);
 
 		const data = {
 			//args
 			labels: lables,
 			datasets: [
 			{
-					label: "mathFunction",
-					function: (x: any) => points.filter((p: any) => p.x === x)
-										.map((p: any) => p.y),
+				label: params.expression,
 				borderColor: "rgba(255, 206, 86, 1)",
 				data: [],
 				fill: false
 			}]
 		};
 
+		const func = (x: number) => points.filter(p => p.x === x)
+										.map(p => p.y);
+
+		Chart.pluginService.clear();
 		Chart.pluginService.register({
-			beforeInit: function (chart: any) {
-				const data = chart.config.data;
-				for (let i = 0; i < data?.datasets?.length; i++) {
-					for (let j = 0; j < data.labels.length; j++) {
-						const func = data.datasets[i].function,
-							x = data.labels[j],
+			beforeInit: function (chart: Chart) {
+				const data = chart.config.data as ChartData;
+				const chartDatasets = data.datasets as ChartDataSets[]
+				const chartDataLabels = data.labels as number[]
+				for (let i = 0; i < chartDatasets.length; i++) {
+					for (let j = 0; j < chartDataLabels.length; j++) {
+						const x = chartDataLabels[j],
 							functionValues = func(x);
-						functionValues.map((y: any) => data.datasets[i].data.push(y));
+						functionValues.map((y: number) => chartDatasets[i].data?.push(y));
 					}
 				}
 			}
