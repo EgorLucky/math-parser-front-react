@@ -1,4 +1,4 @@
-import { ComputedFunction, ParametersAndValue } from '../mathparserService/responseModels/computedFunction'
+import { ComputedFunction } from '../mathparserService/responseModels/computedFunction'
 import { ParameterProp } from '../Components/Parameter/parameterProp'
 
 

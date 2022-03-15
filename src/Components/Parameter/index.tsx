@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { ParameterProp } from "./parameterProp";
-import {parameterNameFieldName, parameterValueFieldName} from "./constants";
+import { parameterNameFieldName, parameterValueFieldName } from "./constants";
 
 function ParameterDiv(props: ParameterProp) {
 

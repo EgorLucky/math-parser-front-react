@@ -1,7 +1,7 @@
 import Chart, { ChartData, ChartDataSets } from 'chart.js';
 
 import { Compute2DIntervalPlotRequestModel } from '../mathparserService/requestModels/compute2DIntervalPlotRequesModel';
-import {mathParserService} from "../mathparserService/mathparserService";
+import { mathParserService } from "../mathparserService/mathparserService";
 import { Compute2DIntervalPlotResult } from '../mathparserService/responseModels/compute2DIntervalPlotResult';
 import ChartPage from './index.jsx';
 import { ResponseContent } from '../mathparserService/responseModels/responseContent';

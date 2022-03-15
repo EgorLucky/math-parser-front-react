@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component } from 'react';
+import { ChangeEvent, Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Loader from '../Components/Loader';
