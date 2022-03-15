@@ -25,11 +25,11 @@ export class IndexHandler{
 		
 		const key = parameters.length === 0
 				? 1
-				: parameters[parameters.length - 1].key + 1;
+				: parameters[parameters.length - 1].id + 1;
 			
 		const parameterProps = {
 			deleteParameter: (key: number) => this.deleteParameter(key), 
-			key: key,
+			id: key,
 			parameter: new Parameter(),
 			onTextChanged: (e: ChangeEvent<HTMLInputElement>, key: number, property: string) => this.parameterTextChanged(e, key, property)
 		};
@@ -44,7 +44,7 @@ export class IndexHandler{
 		const stateParameter = this.indexComponent
 									.state
 									.parametersArray
-									.filter(p => p.key === key)[0] as any;
+									.filter(p => p.id === key)[0] as any;
 		stateParameter.parameter[property] = e.currentTarget.value;
 
 		this.indexComponent.setState({parametersArray: this.indexComponent
@@ -57,7 +57,7 @@ export class IndexHandler{
 						.indexComponent
 						.state
 						.parametersArray
-						.filter(p => p.key !== key);
+						.filter(p => p.id !== key);
 		this.indexComponent.setState({parametersArray: parameters});
 	}
 	

@@ -1,11 +1,11 @@
 import { ComputedFunction, ParametersAndValue } from '../mathparserService/responseModels/computedFunction'
-import { ParameterState } from './parameterState'
+import { ParameterProp } from '../Components/Parameter/parameterProp'
 
 
 export class AppState {
     expression = ""
     isComputing = false
-    parametersArray: ParameterState[] = []
+    parametersArray: ParameterProp[] = []
     lastComputedFunctions: ComputedFunction[] = []
     computeResult = ""
 }

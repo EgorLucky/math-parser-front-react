@@ -1,9 +1,15 @@
 import { ChangeEvent } from "react";
+import { ParameterProp } from "./parameterProp";
 import {parameterNameFieldName, parameterValueFieldName} from "./constants";
 
-function ParameterDiv(props: any) {
+function ParameterDiv(props: ParameterProp) {
 
-	const { id, name, value, onTextChanged, deleteParameter } = props;
+	const { id, parameter, onTextChanged, deleteParameter } = props;
+
+	if(onTextChanged == undefined || deleteParameter == undefined){
+		console.error("onTextChanged or deleteParameter is undefined!!!!!")
+		return <>Error!!!!!</>
+	}
 
 	const nameTextChanged = (e: ChangeEvent<HTMLInputElement>) => onTextChanged(e, id, parameterNameFieldName);
 	const valueTextChanged = (e: ChangeEvent<HTMLInputElement>) => onTextChanged(e, id, parameterValueFieldName);
@@ -18,12 +24,12 @@ function ParameterDiv(props: any) {
 			</div>
 			<div>
 				<input 
-					defaultValue={name} 
+					defaultValue={parameter.variableName} 
 					onChange={nameTextChanged}
 				/>
 				<br/>
 				<input 
-					defaultValue={value} 
+					defaultValue={parameter.value} 
 					onChange={valueTextChanged}
 				/>
 			</div>
